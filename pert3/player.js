@@ -103,6 +103,7 @@ export class Player{
 
         this.mesh.position.add(forwardVector.multiplyScalar(dt * 10 * direction.x))
         this.mesh.position.add(rightVector.multiplyScalar(dt * 10 * direction.z))
+        var moveDirection = new THREE.Vector3(direction.x, 0, direction.z);
         if (moveDirection.length() > 0) {
             var angle = Math.atan2(moveDirection.x, moveDirection.z);
             this.mesh.rotation.y = angle;
