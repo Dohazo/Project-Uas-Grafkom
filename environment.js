@@ -52,45 +52,48 @@ scene.add(character);
 //Plane Lantai 
 const lantaiGeo = new THREE.BoxGeometry(90,180,1, 5, 5); //w h d wS hS dS
 const lantaiMat = new THREE.MeshPhongMaterial();
+lantaiMat.color.set(0xfff7eb);
 const lantaiPos = {x:0, y:-5, z:0};
 const lantaiRot = {x:1.575, y:0, z:0};
-const lantaiImg = 'assets/floor/floorTexture.jpg'
+const lantaiImg = 'assets/floor/floor_tiles.jpeg'
 const lantai = new THREE.Mesh(lantaiGeo, lantaiMat);
-loadTexture(lantaiImg ,30, 30, lantaiGeo, lantaiMat, lantai, lantaiPos, lantaiRot, scene);
+loadTexture(lantaiImg ,8, 13, lantaiGeo, lantaiMat, lantai, lantaiPos, lantaiRot, scene);
 
 //Outer Wall
   //backside
-  const outerWallGeo = new THREE.BoxGeometry(90,35,1, 5,5);
+  const outerWallGeo = new THREE.BoxGeometry(90,55,1, 5,5);
   const outerWallMat = new THREE.MeshPhongMaterial();
-  const outerWallPos = {x:0, y:-89.5, z:-17};
+  outerWallMat.color.set(0xfff7eb);
+  const outerWallPos = {x:0, y:-89.5, z:-27};
   const outerWallRot = {x:20.44, y:0, z:0};
-  const outerWallImg = 'assets/floor/floorTexture.jpg'
+  const outerWallImg = 'assets/wall/canvas_wall.jpg'
   const outerWall = new THREE.Mesh(outerWallGeo, outerWallMat);
   objectCollider.push(outerWall);
-  loadTexture(outerWallImg ,30, 30, outerWallGeo, outerWallMat, outerWall, outerWallPos, outerWallRot, lantai);
-
+  loadTexture(outerWallImg ,10, 15, outerWallGeo, outerWallMat, outerWall, outerWallPos, outerWallRot, lantai);
+  
   //leftside
-  const outerWallSideGeo = new THREE.BoxGeometry(180,35,1, 5,5);
+  const outerWallSideGeo = new THREE.BoxGeometry(180,55,1, 5,5);
   const outerWallSideMat = new THREE.MeshPhongMaterial();
-  const outerWallLeftPos = {x:-44.5, y:0.4, z:-17};
-  const outerWallLeftRot = {x:1.57, y:1.58, z:0};
+  outerWallSideMat.color.set(0xfff7eb);
+  const outerWallLeftPos = {x:-44.5, y:0.4, z:-27};
+  const outerWallLeftRot = {x:1.57, y:1.57, z:0};
   const outerWallLeft = new THREE.Mesh(outerWallSideGeo, outerWallSideMat);
   objectCollider.push(outerWallLeft);
-  loadTexture(outerWallImg, 30, 30, outerWallSideGeo, outerWallSideMat, outerWallLeft, outerWallLeftPos, outerWallLeftRot, lantai);
+  loadTexture(outerWallImg, 10, 15, outerWallSideGeo, outerWallSideMat, outerWallLeft, outerWallLeftPos, outerWallLeftRot, lantai);
 
   //rightside
-  const outerWallRightPos = {x:44.6, y:0.4, z:-17};
-  const outerWallRightRot = {x:1.57, y:1.58, z:0};
+  const outerWallRightPos = {x:44.6, y:0.4, z:-27};
+  const outerWallRightRot = {x:1.57, y:1.57, z:0};
   const outerWallRight = new THREE.Mesh(outerWallSideGeo, outerWallSideMat);
   objectCollider.push(outerWallRight);
-  loadTexture(outerWallImg, 30, 30, outerWallSideGeo, outerWallSideMat, outerWallRight, outerWallRightPos, outerWallRightRot, lantai);
+  loadTexture(outerWallImg, 10, 15, outerWallSideGeo, outerWallSideMat, outerWallRight, outerWallRightPos, outerWallRightRot, lantai);
 
 //Roof
 const roofGeo = new THREE.CylinderGeometry( 45, 45, 180, 39, 38, false, 0.628, 3.141); //rT rB h rad hSeg oE thetaS thetaL 
 const roofMat = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide, transparent:true, opacity: 0.3} ); 
 const roof = new THREE.Mesh( roofGeo, roofMat ); 
 roof.rotation.set(0, 0.95 , 0);
-roof.position.set(0, 0.5, -33);
+roof.position.set(0, 0.5, -53);
 lantai.add( roof );
 
 //GLASS
@@ -101,8 +104,8 @@ lantai.add( roof );
   glass.position.set(-35,0.97,0);
   scene.add(glass);
   // Add collision helper for the glass
-  var glassHelper = new THREE.BoxHelper(glass, 0xff0000);
-  scene.add(glassHelper);
+  // var glassHelper = new THREE.BoxHelper(glass, 0xff0000);
+  // scene.add(glassHelper);
 
 //Pillar - pedestal
   new MTLLoader()
@@ -142,7 +145,7 @@ lantai.add( roof );
   // camera.position.set(0,0,100);
 
 // ========== LIGHT ==========
-var hemisphereLight = new THREE.HemisphereLight(0xb1e1ff, 0xb97a20, 2); // color dari langit, color dari tanah, intensitas
+var hemisphereLight = new THREE.HemisphereLight(0xb1e1ff, 0xb97a20, 3); // color dari langit, color dari tanah, intensitas
 hemisphereLight.position.set(0,0,0);
 hemisphereLight.castShadow = true;
 hemisphereLight.receiveShadow = true;
@@ -300,11 +303,11 @@ function loadTexture(img, wrapHorizontal, wrapVertical, Geo, Mat, obj, position,
           break;
       case ' ':
           if(!creativeMode){
-            creativeMode = true
+            creativeMode = true;
            }
            else{
-            creativeMode = false
-            character.position.set(30,0,30)
+            creativeMode = false;
+            character.position.set(30,0,30);
            }
             break;
   }

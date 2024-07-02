@@ -198,6 +198,14 @@ document.addEventListener('keydown', (event) => {
         case 'd':
             moveDirection.x = 1;
             break;
+        case ' ':
+           if(!creativeMode){
+            creativeMode = true
+           }
+           else{
+            creativeMode = false
+           }
+            break;
     }
 });
 
