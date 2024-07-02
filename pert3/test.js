@@ -20,7 +20,7 @@ character.add(camera);
 
 camera.position.set(0, 1, 0); 
 character.position.set(30,1,30) // Position camera inside the character
-character.scale.set(7,7,7) // Position camera inside the character
+character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
 // Tambahkan dasar plane
@@ -101,6 +101,19 @@ function getRightVector() {
     right.cross(camera.up);
     right.y = 0;
     right.normalize();
+    return right;
+}
+function getForwardVectorCreative() {
+    const forward = new THREE.Vector3();
+    camera.getWorldDirection(forward);
+    return forward;
+}
+
+// Function to get the right direction
+function getRightVectorCreative() {
+    const right = new THREE.Vector3();
+    camera.getWorldDirection(right);
+    right.cross(camera.up);
     return right;
 }
 
