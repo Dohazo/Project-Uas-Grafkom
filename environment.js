@@ -3,6 +3,7 @@ import {OrbitControls} from "three/addons/controls/OrbitControls.js"
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
+
 // ========== SETUP ==========
 //Canvas Renderer
 const renderer = new THREE.WebGLRenderer();
@@ -22,116 +23,118 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.update();
 
 // ========== OBJECT ==========
-
-// Plane Lantai
-const lantaiGeo = new THREE.BoxGeometry(90, 90, 1);
+//Plane Lantai 
+const lantaiGeo = new THREE.BoxGeometry(90,180,1, 5, 5); //w h d wS hS dS
 const lantaiMat = new THREE.MeshPhongMaterial();
+const lantaiPos = {x:0, y:-5, z:0};
+const lantaiRot = {x:1.575, y:0, z:0};
+const lantaiImg = 'assets/floor/floorTexture.jpg'
 const lantai = new THREE.Mesh(lantaiGeo, lantaiMat);
-lantai.receiveShadow = true;
-lantai.position.set(0, -5, 0);
-lantai.rotation.set(Math.PI / 2, 0, 0);
-scene.add(lantai);
+loadTexture(lantaiImg ,30, 30, lantaiGeo, lantaiMat, lantai, lantaiPos, lantaiRot, scene);
 
-// Load texture for lantai
-const textureLoader = new THREE.TextureLoader();
-textureLoader.load('assets/floor/floorTexture.jpg', function(texture) {
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(30, 30);
-    lantaiMat.map = texture;
-    lantaiMat.needsUpdate = true;
-});
+//Outer Wall
+  //backside
+  const outerWallGeo = new THREE.BoxGeometry(90,35,1, 5,5);
+  const outerWallMat = new THREE.MeshPhongMaterial();
+  const outerWallPos = {x:0, y:-89.5, z:-17};
+  const outerWallRot = {x:20.44, y:0, z:0};
+  const outerWallImg = 'assets/floor/floorTexture.jpg'
+  const outerWall = new THREE.Mesh(outerWallGeo, outerWallMat);
+  loadTexture(outerWallImg ,30, 30, outerWallGeo, outerWallMat, outerWall, outerWallPos, outerWallRot, lantai);
 
+  //leftside
+  const outerWallSideGeo = new THREE.BoxGeometry(180,35,1, 5,5);
+  const outerWallSideMat = new THREE.MeshPhongMaterial();
+  const outerWallLeftPos = {x:-44.5, y:0.4, z:-17};
+  const outerWallLeftRot = {x:1.57, y:1.58, z:0};
+  const outerWallLeft = new THREE.Mesh(outerWallSideGeo, outerWallSideMat);
+  loadTexture(outerWallImg, 30, 30, outerWallSideGeo, outerWallSideMat, outerWallLeft, outerWallLeftPos, outerWallLeftRot, lantai);
 
+  //rightside
+  const outerWallRightPos = {x:44.6, y:0.4, z:-17};
+  const outerWallRightRot = {x:1.57, y:1.58, z:0};
+  const outerWallRight = new THREE.Mesh(outerWallSideGeo, outerWallSideMat);
+  loadTexture(outerWallImg, 30, 30, outerWallSideGeo, outerWallSideMat, outerWallRight, outerWallRightPos, outerWallRightRot, lantai);
 
+//Roof
+const roofGeo = new THREE.CylinderGeometry( 45, 45, 180, 39, 38, false, 0.628, 3.141); //rT rB h rad hSeg oE thetaS thetaL 
+const roofMat = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide, transparent:true, opacity: 0.3} ); 
+const roof = new THREE.Mesh( roofGeo, roofMat ); 
+roof.rotation.set(0, 0.95 , 0);
+roof.position.set(0, 0.5, -33);
+lantai.add( roof );
 
-
-
-// //Plane Lantai 
-// // const lantaiGeo = new THREE.BoxGeometry(90,90,1, 5, 5); //w h d wS hS dS
-// // const lantaiMat = new THREE.MeshPhongMaterial();
-// // const lantai = new THREE.Mesh(lantaiGeo,lantaiMat);
-// // // lantai.receiveShadow = true;
-// // // lantai.castShadow = true;
-// const lantaiPos = {x:0, y:-5, z:0};
-// const lantaiRot = {x:1.6, y:0, z:0};
-// const lantaiImg = 'assets/floor/floorTexture.jpg'
-// // // lantai.position.set(lantaiPos);
-// // // lantai.rotation.set(lantaiRot);
-
-
-// // lantai.position.set(0, -5, 0);
-// // lantai.rotation.set(1.6, 0, 0);
-// // scene.add(lantai);
-// loadTexture(lantaiImg ,30, 30, lantaiGeo, lantaiMat, lantaiPos, lantaiRot, scene);
-
-var geometry = new THREE.BoxGeometry(3,3,3);
-// var material = new THREE.MeshBasicMaterial({color: 0xffff33});
-var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.3});
-var glass = new THREE.Mesh(geometry, material);
-glass.castShadow = true; 
-glass.position.set(-35,0.97,0);
-scene.add(glass);
-// Add collision helper for the glass
-var glassHelper = new THREE.BoxHelper(glass, 0xff0000);
-scene.add(glassHelper);
+//GLASS
+  var geometry = new THREE.BoxGeometry(3,3,3);
+  var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+  var glass = new THREE.Mesh(geometry, material);
+  glass.castShadow = true; 
+  glass.position.set(-35,0.97,0);
+  scene.add(glass);
+  // Add collision helper for the glass
+  var glassHelper = new THREE.BoxHelper(glass, 0xff0000);
+  scene.add(glassHelper);
 
 //Pillar - pedestal
-new MTLLoader()
-  .setPath('assets/pedestal/')
-  .load('pedestal.mtl', function (materials) {
-    materials.preload();
-    new OBJLoader()
-      .setMaterials(materials)
-      .setPath('assets/pedestal/')
-      .load('pedestal.obj', function (object) {
-        object.scale.set(0.05,0.05,0.05);
-        // object.position.set(-35, -0.5, 0);
-        object.position.set(-35, -0.5, 0);
-        object.rotation.x += 1.57;
-        object.receiveShadow = true;
-        object.castShadow = true;
-        object.traverse( function ( child ) {
-          if ( child.isMesh ) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        })
-        // let collision_helper = new THREE.BoxHelper(obj,0x111ff);
-        // scene.add(collision_helper)
-        scene.add(object);
-        // Add collision helper for the pedestal
-        var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
-        scene.add(pedestalHelper);
-      });
-  });
-camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
-controls.target.set(glass.position.x, glass.position.y, glass.position.z);
+  new MTLLoader()
+    .setPath('assets/pedestal/')
+    .load('pedestal.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/pedestal/')
+        .load('pedestal.obj', function (object) {
+          object.scale.set(0.05,0.05,0.05);
+          // object.position.set(-35, -0.5, 0);
+          object.position.set(-35, -0.5, 0);
+          object.rotation.x += 1.57;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          })
+          // let collision_helper = new THREE.BoxHelper(obj,0x111ff);
+          // scene.add(collision_helper)
+          scene.add(object);
+          // Add collision helper for the pedestal
+          var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
+          scene.add(pedestalHelper);
+        });
+    });
+
+  //setup camera  
+  // camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
+  // controls.target.set(glass.position.x, glass.position.y, glass.position.z);
+  controls.target.set(0,0,0);
+  camera.position.set(0,0,100);
 
 // ========== LIGHT ==========
-var hemisphereLight = new THREE.HemisphereLight(0xb1e1ff, 0xb97a20, 10); // color dari langit, color dari tanah, intensitas
-// hemisphereLight.position.set(0,0,0);
-// hemisphereLight.castShadow = true;
-// hemisphereLight.recieveShadow = true;
-// scene.add(hemisphereLight);
+var hemisphereLight = new THREE.HemisphereLight(0xb1e1ff, 0xb97a20, 2); // color dari langit, color dari tanah, intensitas
+hemisphereLight.position.set(0,0,0);
+hemisphereLight.castShadow = true;
+hemisphereLight.receiveShadow = true;
+scene.add(hemisphereLight);
 
 //Directional light
-var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-directionalLight.position.set(0,20,0);//posisi e dimana
-directionalLight.target.position.set(-20, 0, 0);//arah e kemana
-directionalLight.castShadow = true;
-directionalLight.shadow.mapSize.width = 1024; // Shadow map resolution
-directionalLight.shadow.mapSize.height = 1024;
-directionalLight.shadow.camera.near = 0.5; // Near plane
-directionalLight.shadow.camera.far = 50; // Far plane
-directionalLight.shadow.camera.left = -50;
-directionalLight.shadow.camera.right = 50;
-directionalLight.shadow.camera.top = 50;
-directionalLight.shadow.camera.bottom = -50; // Far plane
-scene.add(directionalLight);
-scene.add(directionalLight.target);
-var shadowDir = new THREE.CameraHelper(directionalLight.shadow.camera);
-scene.add(shadowDir)
+  var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+  directionalLight.position.set(0,20,0);//posisi e dimana
+  directionalLight.target.position.set(-20, 0, 0);//arah e kemana
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 1024; // Shadow map resolution
+  directionalLight.shadow.mapSize.height = 1024;
+  directionalLight.shadow.camera.near = 0.5; // Near plane
+  directionalLight.shadow.camera.far = 50; // Far plane
+  directionalLight.shadow.camera.left = -50;
+  directionalLight.shadow.camera.right = 50;
+  directionalLight.shadow.camera.top = 50;
+  directionalLight.shadow.camera.bottom = -50; // Far plane
+  scene.add(directionalLight);
+  scene.add(directionalLight.target);
+  var shadowDir = new THREE.CameraHelper(directionalLight.shadow.camera);
+  scene.add(shadowDir)
 
 var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
 scene.add(directionalLightHelper);
@@ -147,24 +150,25 @@ requestAnimationFrame(animate);
 
 // ========== METHODS ==========
 //Texture Loader
-// function loadTexture(img, wrapHorizontal, wrapVertical, Geo, Mat, position, rotation, scene) {
-//   const textureLoader = new THREE.TextureLoader();
-//   textureLoader.load(img, function(texture) {
-//       texture.wrapS = THREE.RepeatWrapping;
-//       texture.wrapT = THREE.RepeatWrapping;
-//       texture.repeat.set(wrapHorizontal, wrapVertical);
+function loadTexture(img, wrapHorizontal, wrapVertical, Geo, Mat, obj, position, rotation, scene) {
+  const textureLoader = new THREE.TextureLoader();
+  textureLoader.load(img, function(texture) {
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(wrapHorizontal, wrapVertical);
       
-//       Mat.map = texture;  
-//       Mat.needsUpdate = true;
+      Mat.map = texture;  
+      Mat.needsUpdate = true;
 
-//       const obj = new THREE.Mesh(Geo, Mat);
-//       obj.position.set(position.x, position.y, position.z);
-//       obj.rotation.set(rotation.x, rotation.y, rotation.z);
-//       obj.receiveShadow = true;
+      obj.position.set(position.x, position.y, position.z);
+      obj.rotation.set(rotation.x, rotation.y, rotation.z);
+      obj.receiveShadow = true;
+      obj.castShadow = true;
+
+      scene.add(obj);
     
-//       scene.add(obj);
-//   });
-// }
+  });
+}
 //MTL Loader
 // function loadMTL(path, mtl, targetObj, scale, position){
 // new MTLLoader()
@@ -184,3 +188,7 @@ requestAnimationFrame(animate);
 //                     }, );
 //                 } );
 // }
+
+ function  addTo(obj1, obj2){
+  obj1.add(obj2);
+ }
