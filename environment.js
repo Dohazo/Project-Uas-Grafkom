@@ -23,7 +23,7 @@ controls.update();
 // ========== OBJECT ==========
 //Plane Lantai 
 const lantaiGeo = new THREE.BoxGeometry(90,90,1, 5, 5); //w h d wS hS dS
-const lantaiMat = new THREE.MeshBasicMaterial();
+const lantaiMat = new THREE.MeshPhongMaterial();
 const lantaiPos = {x:0, y:-5, z:0};
 const lantaiRot = {x:1.6, y:0, z:0};
 const lantaiImg = 'assets/floor/floorTexture.jpg'
@@ -37,29 +37,37 @@ glass.position.set(-35,0.97,0);
 scene.add(glass);
 
 //Pillar - pedestal
-new MTLLoader()
-  .setPath('assets/pedestal/')
-  .load('pedestal.mtl', function (materials) {
-    materials.preload();
-    new OBJLoader()
-      .setMaterials(materials)
-      .setPath('assets/pedestal/')
-      .load('pedestal.obj', function (object) {
-        scene.add(object);
-        object.scale.set(0.05,0.05,0.05);
-        // object.position.set(-35, -0.5, 0);
-        object.position.set(-35, -0.5, 0);
-        object.rotation.x += 1.57;
-        object.recieveShadow = true;
-        object.castShadow = true;
-        // object.traverse( function ( child ) {
-        //     if ( child.isMesh ) {
-        //         child.castShadow = true;
-        //         child.receiveShadow = true;
-        //     }
-        // })
-      });
-  });
+const pedestalPath = 'asssets/pedestal/';
+const pedestalMat = 'pedestal.mtl';
+const pedestalObj = 'pedestal.obj';
+const pedestalScale = {x:0.05, y: 0.05, z : 0.05};
+const pedestalPos = {x:-35, y:-0.5, z:0};
+const pedestalRot = {x:1.57, y:0, z:0};
+loadObj(pedestalPath, pedestalMat, pedestalObj, pedestalScale, pedestalPos, pedestalRot, scene, true, true);
+
+// new MTLLoader()
+//   .setPath('assets/pedestal/')
+//   .load('pedestal.mtl', function (materials) {
+//     materials.preload();
+//     new OBJLoader()
+//       .setMaterials(materials)
+//       .setPath('assets/pedestal/')
+//       .load('pedestal.obj', function (object) {
+//         scene.add(object);
+//         object.scale.set(0.05,0.05,0.05);
+//         // object.position.set(-35, -0.5, 0);
+//         object.position.set(-35, -0.5, 0);
+//         object.rotation.x += 1.57;
+//         object.receiveShadow = true;
+//         object.castShadow = true;
+//         // object.traverse( function ( child ) {
+//         //     if ( child.isMesh ) {
+//         //         child.castShadow = true;
+//         //         child.receiveShadow = true;
+//         //     }
+//         // })
+//       });
+//   });
 camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
 controls.target.set(glass.position.x, glass.position.y, glass.position.z);
 
@@ -109,21 +117,22 @@ function loadTexture(img, wrapHorizontal, wrapVertical, Geo, Mat, position, rota
 }
 
 //MTL Loader
-// function loadMTL(path, mtl, targetObj, scale, position){
-// new MTLLoader()
-//     .setPath( path )
-//         .load( mtl , function ( materials ) {
+function loadObj(path, mtl, obj, scale, position,rotation, scene, receiveShadow, castShadow){
+new MTLLoader()
+    .setPath( path )
+        .load( mtl , function ( materials ) {
+                materials.preload();
+                new OBJLoader()
+                    .setMaterials( materials )
+                    .setPath( path )
+                    .load( obj, function ( object ) {
+                        scene.add( object );
+                        object.scale.set(scale.x, scale.y, scale.z);
+                        object.position.set(position.x, position.y, position.z);
+                        object.rotation.set(rotation.x, rotation.y, rotation.z);
+                        object.receiveShadow = receiveShadow;
+                        object.castShadow = castShadow;
 
-//                 materials.preload();
-
-//                 new OBJLoader()
-//                     .setMaterials( materials )
-//                     .setPath( path )
-//                     .load( mtl, function ( object ) {
-//                         targetObj.add( object );
-//                         object.scale.set(scale.x, scale.y, scale.z);
-//                         object.position.set(position.x, position.y, position.z);
-
-//                     }, );
-//                 } );
-// }
+                    }, );
+                } );
+}
