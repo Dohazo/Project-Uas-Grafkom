@@ -17,12 +17,7 @@ var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-// camera.position.set(0,0,40);
-// camera.lookAt(0,0,0);
-//control camera
-// const controls = new OrbitControls(camera, renderer.domElement);
-// controls.target.set(0,0,0);
-// controls.update();
+
 const controls = new PointerLockControls(camera, document.body);
 document.addEventListener('click', () => {
   controls.lock();
@@ -122,12 +117,6 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead5 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead5, -60);
 
-//setup camera  
-// camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
-// controls.target.set(glass.position.x, glass.position.y, glass.position.z);
-// controls.target.set(0,0,0);
-// camera.position.set(0,0,100);
-
 // ========== LIGHT ==========
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
 pointLight.position.set(0,30,10);
@@ -135,21 +124,10 @@ scene.add(pointLight);
 // var hemisphereLight = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.3); // color dari langit, color dari tanah, intensitas
 // scene.add(hemisphereLight);
 
-//spot light
-// var spotLight = new THREE.SpotLight(0xffec8e, 20,50);
-// // spotLight.position.set(-10,10,0);//posisi e dimana
-// spotLight.position.set(-20,-4,0);//posisi e dimana
-// spotLight.target.position.set(pedestalHead.position.x+3, 0, 0);//arah e kemana
-// spotLight.castShadow = true;
-// spotLight.angle = Math.PI / 10;
-// scene.add(spotLight);
-// scene.add(spotLight.target);
-
 // ========== LIGHT HELPER ==========
 // var shadowDir = new THREE.SpotLightHelper(spotLight);
-var shadowDir = new THREE.PointLightHelper(pointLight);
-
-scene.add(shadowDir)
+// var shadowDir = new THREE.PointLightHelper(pointLight);
+// scene.add(shadowDir)
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -296,29 +274,27 @@ function loadTexture(img, wrapHorizontal, wrapVertical, Geo, Mat, obj, position,
     
   });
 }
+
 //MTL Loader
-// function loadMTL(path, mtl, targetObj, scale, position){
-// new MTLLoader()
-//     .setPath( path )
-//         .load( mtl , function ( materials ) {
+function loadMTL(path, mtl, targetObj, scale, position){
+new MTLLoader()
+    .setPath( path )
+        .load( mtl , function ( materials ) {
 
-//                 materials.preload();
+                materials.preload();
 
-//                 new OBJLoader()
-//                     .setMaterials( materials )
-//                     .setPath( path )
-//                     .load( mtl, function ( object ) {
-//                         targetObj.add( object );
-//                         object.scale.set(scale.x, scale.y, scale.z);
-//                         object.position.set(position.x, position.y, position.z);
+                new OBJLoader()
+                    .setMaterials( materials )
+                    .setPath( path )
+                    .load( mtl, function ( object ) {
+                        targetObj.add( object );
+                        object.scale.set(scale.x, scale.y, scale.z);
+                        object.position.set(position.x, position.y, position.z);
 
-//                     }, );
-//                 } );
-// }
+                    }, );
+                } );
+}
 
- function  addTo(obj1, obj2){
-  obj1.add(obj2);
- }
  document.addEventListener('keydown', (event) => {
   switch (event.key) {
       case 'w':
