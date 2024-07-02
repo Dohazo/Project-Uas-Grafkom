@@ -76,15 +76,15 @@ moon.add(new THREE.SpotLightHelper(spotlight));
 
 //Ambil objek dari asset
 new MTLLoader()
-			.setPath( 'resources/Satellite/Satellite/' )
-				.load( 'Satelite.mtl', function ( materials ) {
+			.setPath( 'bridge/' )
+				.load( 'Door.mtl', function ( materials ) {
 
 						materials.preload();
 
 						new OBJLoader()
 							.setMaterials( materials )
-							.setPath( 'resources/Satellite/Satellite/' )
-							.load( 'Satelite.obj', function ( object ) {
+							.setPath( 'bridge/' )
+							.load( 'Door.obj', function ( object ) {
 								earth.add( object );
                                 object.scale.set(0.1,0.1,0.1);
                                 object.position.set(-3,0,0);
