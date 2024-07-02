@@ -4,6 +4,7 @@ import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+
 // ========== SETUP ==========
 //Canvas Renderer
 const renderer = new THREE.WebGLRenderer();
@@ -133,8 +134,8 @@ lantai.add( roof );
           scene.add(object);
           objectCollider.push(object)
           // Add collision helper for the pedestal
-          var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
-          scene.add(pedestalHelper);
+          // var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
+          // scene.add(pedestalHelper);
         });
     });
 
@@ -145,33 +146,27 @@ lantai.add( roof );
   // camera.position.set(0,0,100);
 
 // ========== LIGHT ==========
-var hemisphereLight = new THREE.HemisphereLight(0xb1e1ff, 0xb97a20, 3); // color dari langit, color dari tanah, intensitas
-hemisphereLight.position.set(0,0,0);
-hemisphereLight.castShadow = true;
-hemisphereLight.receiveShadow = true;
-scene.add(hemisphereLight);
+var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
+pointLight.position.set(0,30,0);
+scene.add(pointLight);
 
-//Directional light
-  var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
-  directionalLight.position.set(0,20,0);//posisi e dimana
-  directionalLight.target.position.set(-20, 0, 0);//arah e kemana
-  directionalLight.castShadow = true;
-  directionalLight.shadow.mapSize.width = 1024; // Shadow map resolution
-  directionalLight.shadow.mapSize.height = 1024;
-  directionalLight.shadow.camera.near = 0.5; // Near plane
-  directionalLight.shadow.camera.far = 50; // Far plane
-  directionalLight.shadow.camera.left = -50;
-  directionalLight.shadow.camera.right = 50;
-  directionalLight.shadow.camera.top = 50;
-  directionalLight.shadow.camera.bottom = -50; // Far plane
-  scene.add(directionalLight);
-  scene.add(directionalLight.target);
-  var shadowDir = new THREE.CameraHelper(directionalLight.shadow.camera);
-  scene.add(shadowDir)
+// var hemisphereLight = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.3); // color dari langit, color dari tanah, intensitas
+// scene.add(hemisphereLight);
 
-var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
-scene.add(directionalLightHelper);
+//spot light
+var spotLight = new THREE.SpotLight(0xffec8e, 20,50);
+spotLight.position.set(-10,10,0);//posisi e dimana
+spotLight.target.position.set(glass.position.x, 0, 0);//arah e kemana
+spotLight.castShadow = true;
+spotLight.angle = Math.PI / 10;
+scene.add(spotLight);
+scene.add(spotLight.target);
 
+// ========== LIGHT HELPER ==========
+// var shadowDir = new THREE.SpotLightHelper(spotLight);
+// scene.add(shadowDir)
+
+// ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
 const moveSpeed = 0.5;  
 //Function to get the forward direction
