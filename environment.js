@@ -97,74 +97,59 @@ roof.rotation.set(0, 0.95 , 0);
 roof.position.set(0, 0.5, -53);
 lantai.add( roof );
 
-//GLASS
-  var geometry = new THREE.BoxGeometry(3,3,3);
-  var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-  var glass = new THREE.Mesh(geometry, material);
-  glass.castShadow = true; 
-  glass.position.set(-35,0.97,0);
-  scene.add(glass);
-  // Add collision helper for the glass
-  // var glassHelper = new THREE.BoxHelper(glass, 0xff0000);
-  // scene.add(glassHelper);
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead, 0);
 
-//Pillar - pedestal
-  new MTLLoader()
-    .setPath('assets/pedestal/')
-    .load('pedestal.mtl', function (materials) {
-      materials.preload();
-      new OBJLoader()
-        .setMaterials(materials)
-        .setPath('assets/pedestal/')
-        .load('pedestal.obj', function (object) {
-          object.scale.set(0.05,0.05,0.05);
-          // object.position.set(-35, -0.5, 0);
-          object.position.set(-35, -0.5, 0);
-          object.rotation.x += 1.57;
-          object.receiveShadow = true;
-          object.castShadow = true;
-          object.traverse( function ( child ) {
-            if ( child.isMesh ) {
-              child.castShadow = true;
-              child.receiveShadow = true;
-            }
-          })
-          // let collision_helper = new THREE.BoxHelper(obj,0x111ff);
-          // scene.add(collision_helper)
-          scene.add(object);
-          objectCollider.push(object)
-          // Add collision helper for the pedestal
-          // var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
-          // scene.add(pedestalHelper);
-        });
-    });
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead2 = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead2, 30);
 
-  //setup camera  
-  // camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
-  // controls.target.set(glass.position.x, glass.position.y, glass.position.z);
-  // controls.target.set(0,0,0);
-  // camera.position.set(0,0,100);
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead3 = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead3, 60);
+
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead4 = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead4, -30);
+
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead5 = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead5, -60);
+
+//setup camera  
+// camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
+// controls.target.set(glass.position.x, glass.position.y, glass.position.z);
+// controls.target.set(0,0,0);
+// camera.position.set(0,0,100);
 
 // ========== LIGHT ==========
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
-pointLight.position.set(0,30,0);
+pointLight.position.set(0,30,10);
 scene.add(pointLight);
-
 // var hemisphereLight = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.3); // color dari langit, color dari tanah, intensitas
 // scene.add(hemisphereLight);
 
 //spot light
-var spotLight = new THREE.SpotLight(0xffec8e, 20,50);
-spotLight.position.set(-10,10,0);//posisi e dimana
-spotLight.target.position.set(glass.position.x, 0, 0);//arah e kemana
-spotLight.castShadow = true;
-spotLight.angle = Math.PI / 10;
-scene.add(spotLight);
-scene.add(spotLight.target);
+// var spotLight = new THREE.SpotLight(0xffec8e, 20,50);
+// // spotLight.position.set(-10,10,0);//posisi e dimana
+// spotLight.position.set(-20,-4,0);//posisi e dimana
+// spotLight.target.position.set(pedestalHead.position.x+3, 0, 0);//arah e kemana
+// spotLight.castShadow = true;
+// spotLight.angle = Math.PI / 10;
+// scene.add(spotLight);
+// scene.add(spotLight.target);
 
 // ========== LIGHT HELPER ==========
 // var shadowDir = new THREE.SpotLightHelper(spotLight);
-// scene.add(shadowDir)
+var shadowDir = new THREE.PointLightHelper(pointLight);
+
+scene.add(shadowDir)
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -240,6 +225,57 @@ requestAnimationFrame(animate);
 
 
 // ========== METHODS ==========
+//Spawn pedestal
+function spawnPedestal(poi, pos){
+  //GLASS
+  var glass = poi
+  glass.position.set(-35,0.97,pos);
+  scene.add(glass);
+  // Add collision helper for the glass
+  // var glassHelper = new THREE.BoxHelper(glass, 0xff0000);
+  // scene.add(glassHelper);
+
+//Pillar - pedestal
+  new MTLLoader()
+    .setPath('assets/pedestal/')
+    .load('pedestal.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/pedestal/')
+        .load('pedestal.obj', function (object) {
+          object.scale.set(0.05,0.05,0.05);
+          // object.position.set(-35, -0.5, 0);
+          object.position.set(-35, -0.5, pos);
+          object.rotation.x += 1.57;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          })
+          // let collision_helper = new THREE.BoxHelper(obj,0x111ff);
+          // scene.add(collision_helper)
+          scene.add(object);
+          objectCollider.push(object)
+          // Add collision helper for the pedestal
+          // var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
+          // scene.add(pedestalHelper);
+        });
+    });
+
+    var spotLight = new THREE.SpotLight(0xffec8e, 20,50);
+    // spotLight.position.set(-10,10,0);//posisi e dimana
+    spotLight.position.set(-20,-4,pos);//posisi e dimana
+    spotLight.target.position.set(glass.position.x+3, glass.position.y, glass.position.z);//arah e kemana
+    spotLight.castShadow = true;
+    spotLight.angle = Math.PI / 10;
+    scene.add(spotLight);
+    scene.add(spotLight.target);
+}
+
 //Texture Loader
 function loadTexture(img, wrapHorizontal, wrapVertical, Geo, Mat, obj, position, rotation, scene) {
   const textureLoader = new THREE.TextureLoader();
