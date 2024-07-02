@@ -6,6 +6,9 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+
+let creativeMode = false;
+
 // Setup Scene and Camera
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -18,9 +21,9 @@ const characterMaterial = new THREE.MeshBasicMaterial({ color: 0x112200 });
 const character = new THREE.Mesh(characterGeometry, characterMaterial);
 character.add(camera);
 
-camera.position.set(0, 1, 0); 
+camera.position.set(0, 0.1, 0); 
 character.position.set(30,1,30) // Position camera inside the character
-character.scale.set(7,7,7) // Position camera inside the character
+character.scale.set(2,2,2) // Position camera inside the character
 scene.add(character);
 
 // Tambahkan dasar plane
@@ -48,6 +51,9 @@ function createCollisionBox(position) {
     collisionBox.scale.set(10, 10, 10); // Scale sesuai kebutuhan
     scene.add(collisionBox);
     collisionBoxes.push(collisionBox); // Tambahkan ke array collisionBoxes
+       // Add BoxHelper to visualize the collision box
+       const boxHelper = new THREE.BoxHelper(collisionBox, 0x0000ff);
+       scene.add(boxHelper);
 }
 
 createCollisionBox(new THREE.Vector3(0, 1, 0));
@@ -83,7 +89,7 @@ controls.addEventListener('unlock', () => {
 
 // Variables for smooth movement
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
-const moveSpeed = 0.5;  // Adjust movement speed as needed
+const moveSpeed = 0.1;  // Adjust movement speed as needed
 
 // Function to get the forward direction
 function getForwardVector() {
@@ -103,17 +109,36 @@ function getRightVector() {
     right.normalize();
     return right;
 }
+function getRightVectorCreative() {
+    const right = new THREE.Vector3();
+    camera.getWorldDirection(right);
+    right.cross(camera.up);
+    return right;
+}
 
+function getForwardVectorCreative() {
+    const forward = new THREE.Vector3();
+    camera.getWorldDirection(forward);
+    return forward;
+}
 
-
+        let forwardVector;
+        let rightVector;
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
 
 
     // Calculate the move direction based on camera orientation
-    const forwardVector = getForwardVector();
-    const rightVector = getRightVector();
+    if(!creativeMode){
+         forwardVector = getForwardVector();
+         rightVector = getRightVector();
+
+    }
+    else{
+         forwardVector = getForwardVectorCreative();
+         rightVector = getRightVectorCreative();
+    }
 
     // controls.moveForward(moveDirection.z * moveSpeed);
     // controls.moveRight(moveDirection.x * moveSpeed);
@@ -172,6 +197,7 @@ window.addEventListener('resize', () => {
 // Basic movement
 
 document.addEventListener('keydown', (event) => {
+    console.log(event)
     switch (event.key) {
         case 'w':
             moveDirection.z = 1;
@@ -184,6 +210,15 @@ document.addEventListener('keydown', (event) => {
             break;
         case 'd':
             moveDirection.x = 1;
+            break;
+        case ' ':
+            if(!creativeMode){
+                creativeMode = true;
+            }
+            else{
+                creativeMode = false;
+                character.position.set(30,1,30)
+            }
             break;
     }
 });
