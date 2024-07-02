@@ -25,7 +25,7 @@ controls.update();
 
 // Plane Lantai
 const lantaiGeo = new THREE.BoxGeometry(90, 90, 1);
-const lantaiMat = new THREE.MeshPhongMaterial();
+const lantaiMat = new THREE.MeshPhongMaterial({color: 0x808080});
 const lantai = new THREE.Mesh(lantaiGeo, lantaiMat);
 lantai.receiveShadow = true;
 lantai.position.set(0, -5, 0);
@@ -69,12 +69,12 @@ var geometry = new THREE.BoxGeometry(3,3,3);
 // var material = new THREE.MeshBasicMaterial({color: 0xffff33});
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.3});
 var glass = new THREE.Mesh(geometry, material);
-glass.castShadow = true; 
+glass.castShadow = false; 
 glass.position.set(-35,0.97,0);
 scene.add(glass);
-// Add collision helper for the glass
-var glassHelper = new THREE.BoxHelper(glass, 0xff0000);
-scene.add(glassHelper);
+// Add collision helper
+// var glassHelper = new THREE.BoxHelper(glass, 0xff0000);
+// scene.add(glassHelper);
 
 //Pillar - pedestal
 new MTLLoader()
@@ -100,23 +100,23 @@ new MTLLoader()
         // let collision_helper = new THREE.BoxHelper(obj,0x111ff);
         // scene.add(collision_helper)
         scene.add(object);
-        // Add collision helper for the pedestal
-        var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
-        scene.add(pedestalHelper);
+        // Add collision helper
+        // var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
+        // scene.add(pedestalHelper);
       });
   });
 camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
 controls.target.set(glass.position.x, glass.position.y, glass.position.z);
 
 // ========== LIGHT ==========
-var hemisphereLight = new THREE.HemisphereLight(0xb1e1ff, 0xb97a20, 10); // color dari langit, color dari tanah, intensitas
-// hemisphereLight.position.set(0,0,0);
-// hemisphereLight.castShadow = true;
-// hemisphereLight.recieveShadow = true;
-// scene.add(hemisphereLight);
+var hemisphereLight = new THREE.PointLight(0xb1e1ff, 1000, 1000); // color dari langit, color dari tanah, intensitas
+hemisphereLight.position.set(0,2,0);
+hemisphereLight.castShadow = true;
+hemisphereLight.recieveShadow = true;
+scene.add(hemisphereLight);
 
 //Directional light
-var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 10);
 directionalLight.position.set(0,20,0);//posisi e dimana
 directionalLight.target.position.set(-20, 0, 0);//arah e kemana
 directionalLight.castShadow = true;
@@ -124,17 +124,18 @@ directionalLight.shadow.mapSize.width = 1024; // Shadow map resolution
 directionalLight.shadow.mapSize.height = 1024;
 directionalLight.shadow.camera.near = 0.5; // Near plane
 directionalLight.shadow.camera.far = 50; // Far plane
-directionalLight.shadow.camera.left = -50;
-directionalLight.shadow.camera.right = 50;
-directionalLight.shadow.camera.top = 50;
+directionalLight.shadow.camera.left = -10;
+directionalLight.shadow.camera.right = 10;
+directionalLight.shadow.camera.top = 15;
 directionalLight.shadow.camera.bottom = -50; // Far plane
 scene.add(directionalLight);
 scene.add(directionalLight.target);
-var shadowDir = new THREE.CameraHelper(directionalLight.shadow.camera);
-scene.add(shadowDir)
 
-var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
-scene.add(directionalLightHelper);
+
+// ========== LIGHT HELPER ==========
+// var shadowDir = new THREE.CameraHelper(directionalLight.shadow.camera);
+// scene.add(shadowDir)
+// scene.add(directionalLightHelper);
 
 // ========== ANIMATE ==========
 //loop Animate
@@ -144,6 +145,7 @@ function animate(){
     requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
+
 
 // ========== METHODS ==========
 //Texture Loader
