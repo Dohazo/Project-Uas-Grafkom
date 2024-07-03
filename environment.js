@@ -6,6 +6,20 @@ import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
 // ========== SETUP ==========
+// Create a canvas element for the gradient texture
+const gradientCanvas = document.createElement('canvas');
+gradientCanvas.width = 512;
+gradientCanvas.height = 512;
+const ctx = gradientCanvas.getContext('2d');
+const gradient = ctx.createLinearGradient(0, 0, 0, gradientCanvas.height);
+gradient.addColorStop(0, '#171D20'); // Blue
+gradient.addColorStop(1, '#171D20'); // LightBlue
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height);
+
+// Create a texture from the canvas
+const gradientTexture = new THREE.CanvasTexture(gradientCanvas);
+
 //Canvas Renderer
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -15,9 +29,12 @@ document.body.appendChild(renderer.domElement);
 var creativeMode = false;
 let rotate = false;
 let roll = false;
+let yaw = false;
+let pitch = false;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
+scene.background = gradientTexture;
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 const controls = new PointerLockControls(camera, document.body);
@@ -184,6 +201,17 @@ loadTexture(lantaiImg ,8, 13, lantaiGeo, lantaiMat, lantai, lantaiPos, lantaiRot
   objectCollider.push(outerWall);
   loadTexture(outerWallImg ,10, 15, outerWallGeo, outerWallMat, outerWall, outerWallPos, outerWallRot, lantai);
   
+  //frontside
+  const outerWallFrontGeo = new THREE.BoxGeometry(90,55,1, 5,5);
+  const outerWallFrontMat = new THREE.MeshPhongMaterial();
+  outerWallFrontMat.color.set(0xfff7eb);
+  const outerWallFrontPos= {x:0, y:89.5, z:-27};
+  const outerWallFrontRot = {x:20.44, y:0, z:0};
+  // const outerWallFrontImg = 'assets/wall/canvas_wall.jpg'
+  const outerWallFront = new THREE.Mesh(outerWallGeo, outerWallMat);
+  objectCollider.push(outerWallFront);
+  loadTexture(outerWallImg ,10, 15, outerWallFrontGeo, outerWallFrontMat, outerWallFront, outerWallFrontPos, outerWallFrontRot, lantai);
+  
   //leftside
   const outerWallSideGeo = new THREE.BoxGeometry(180,55,1, 5,5);
   const outerWallSideMat = new THREE.MeshPhongMaterial();
@@ -203,7 +231,7 @@ loadTexture(lantaiImg ,8, 13, lantaiGeo, lantaiMat, lantai, lantaiPos, lantaiRot
 
 //Roof
 const roofGeo = new THREE.CylinderGeometry( 45, 45, 180, 39, 38, false, 0.628, 3.141); //rT rB h rad hSeg oE thetaS thetaL 
-const roofMat = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide, transparent:true, opacity: 0.3} ); 
+const roofMat = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide, transparent:true, opacity: 0.3} ); 
 const roof = new THREE.Mesh( roofGeo, roofMat ); 
 roof.rotation.set(0, 0.95 , 0);
 roof.position.set(0, 0.5, -53);
@@ -220,10 +248,10 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead2 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead2,-35 , 40, -20);
 
-// var geometry = new THREE.BoxGeometry(3,3,3);
-// var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-// var pedestalHead3 = new THREE.Mesh(geometry, material);
-// spawnPedestal(pedestalHead3,-35 , 70, -20);
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead3 = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead3,-35 , 70, -20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
@@ -245,10 +273,10 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead7 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead7,35 , 40, 20);
 
-// var geometry = new THREE.BoxGeometry(3,3,3);
-// var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-// var pedestalHead8 = new THREE.Mesh(geometry, material);
-// spawnPedestal(pedestalHead8,35 , 70, 20);
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead8 = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead8,35 , 70, 20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
@@ -264,7 +292,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   //pigura
     //box tangga
     const pigguraGeo = new THREE.BoxGeometry(12 ,14, 0.3); 
-    const piguraMat = new THREE.MeshPhongMaterial();//({color: 0x00ff00});
+    const piguraMat = new THREE.MeshPhongMaterial({side : THREE.FrontSide});//({color: 0x00ff00});
     const pigura = new THREE.Mesh(pigguraGeo, piguraMat);
     const piguraPos = {x: 0, y :25, z:-88};
     const piguraRot = {x: 0, y :0, z: 8};
@@ -298,10 +326,18 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   });
   //box tangga
   const bawahTanggaGeo = new THREE.BoxGeometry(90 ,10,24); 
-  const bawahTanggaMat = new THREE.MeshPhongMaterial({color: 0x00ff00});
+  const bawahTanggaMat = new THREE.MeshPhongMaterial({
+    color: 0x6D6D6D, 
+    specular: 0x808080, 
+    shininess: 225, 
+    side: THREE.DoubleSide
+  });
   const bawahTangga = new THREE.Mesh(bawahTanggaGeo, bawahTanggaMat);
   bawahTangga.position.set(0,0,-78);
   scene.add(bawahTangga);
+  bawahTangga.receiveShadow = true;
+  bawahTangga.castShadow = true;
+  objectCollider.push(bawahTangga);
   //tangga kanan
   new MTLLoader()
   .setPath('assets/stair/')
@@ -330,10 +366,18 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   });
   //box tangga kanan
   const kananTanggaGeo = new THREE.BoxGeometry(18,14,24); 
-  const kananTangaMat = new THREE.MeshPhongMaterial({color: 0xffff00});
+  const kananTangaMat = new THREE.MeshPhongMaterial({
+    color: 0x6D6D6D, 
+    specular: 0x808080, 
+    shininess: 225, 
+    side: THREE.DoubleSide
+  });
   const kananTangga = new THREE.Mesh(kananTanggaGeo, kananTangaMat);
   kananTangga.position.set(35,12,-78);
   scene.add(kananTangga);
+  bawahTangga.receiveShadow = true;
+  bawahTangga.castShadow = true;
+  objectCollider.push(bawahTangga);
   //tangga kiri
   new MTLLoader()
   .setPath('assets/stair/')
@@ -362,10 +406,18 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   });
   //box tangga kiri
   const kiriTanggaGeo = new THREE.BoxGeometry(18,14,24); 
-  const kiriTanggaMat = new THREE.MeshPhongMaterial({color: 0xffff00});
+  const kiriTanggaMat = new THREE.MeshPhongMaterial({
+    color: 0x6D6D6D, 
+    specular: 0x808080, 
+    shininess: 225, 
+    side: THREE.DoubleSide
+  });
   const kiriTangga = new THREE.Mesh(kiriTanggaGeo, kiriTanggaMat);
   kiriTangga.position.set(-35,12,-78);
   scene.add(kiriTangga);
+  bawahTangga.receiveShadow = true;
+  bawahTangga.castShadow = true;
+  objectCollider.push(bawahTangga);
 
   //2nd Floor
     const lantai2KiriGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
@@ -897,11 +949,11 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
        
        // streetLight.rotation.x += 0.2;
        streetLight.receiveShadow = true;
-       streetLight.castShadow = true;
+       streetLight.castShadow = false;
        streetLight.traverse( function ( child ) {
          if ( child.isMesh ) {
            child.material.side = THREE.DoubleSide;
-           child.castShadow = true;
+           child.castShadow = false;
            child.receiveShadow = true;
            child.material.wireframe = false;
          }
@@ -914,9 +966,49 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
  artefact.position.set(-10,0,-10)
  scene.add(artefact);
 
+  new MTLLoader()
+ .setPath('assets/spotlight/')
+ .load('spotlight.mtl', function (materials) {
+   materials.preload();
+   new OBJLoader()
+     .setMaterials(materials)
+     .setPath('assets/spotlight/')
+     .load('spotlight.obj', function (object) {
+       object.scale.set(0.17,0.17,0.17);
+       // object.position.set(-35, -0.5, 0);
+       object.position.set(30, 53, -85); //x, y, z
+       object.rotation.x += -0.1;
+       object.rotation.y += 17.4;
+
+       scene.add(object);
+       objectCollider.push(object)
+
+     });
+ });
+
+  new MTLLoader()
+ .setPath('assets/spotlight/')
+ .load('spotlight.mtl', function (materials) {
+   materials.preload();
+   new OBJLoader()
+     .setMaterials(materials)
+     .setPath('assets/spotlight/')
+     .load('spotlight.obj', function (object) {
+       object.scale.set(0.17,0.17,0.17);
+       // object.position.set(-35, -0.5, 0);
+       object.position.set(-30, 53, -85); //x, y, z
+       object.rotation.x += -0.1;
+       object.rotation.y += -17.4;
+
+       scene.add(object);
+       objectCollider.push(object)
+
+     });
+ });
+
 
 // ========== LIGHT ==========
-// scene.fog = new THREE.FogExp2(0x000000, 0.02);
+scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
 pointLight.position.set(0,30,10);
 pointLight.castShadow = true;
@@ -926,18 +1018,18 @@ const light = new THREE.AmbientLight( 0xcfe2f3, 0.1 ); // soft white light
 scene.add( light );
 
 //upstair spotlight
-var redLight = new THREE.SpotLight(0xff5b5b, 90,50);
+var redLight = new THREE.SpotLight(0xff5b5b, 100,50);
 // spotLight.position.set(-10,10,0);//posisi e dimana
-redLight.position.set(30, 55, -70);//posisi e dimana
+redLight.position.set(30, 55, -85);//posisi e dimana
 redLight.target.position.set(0, 25, -88);//arah e kemana
 redLight.castShadow = true;
 redLight.angle = Math.PI / 9;
 scene.add(redLight);
 scene.add(redLight.target);
 
-var blueLight = new THREE.SpotLight(0x58E6FF, 90,50);
+var blueLight = new THREE.SpotLight(0x58E6FF, 100,50);
 // spotLight.position.set(-10,10,0);//posisi e dimana
-blueLight.position.set(-30, 55, -70);//posisi e dimana
+blueLight.position.set(-30, 55, -85);//posisi e dimana
 blueLight.target.position.set(0, 25, -88);//arah e kemana
 blueLight.castShadow = true;
 blueLight.angle = Math.PI / 9;
@@ -948,8 +1040,8 @@ scene.add(blueLight.target);
 // scene.add(hemisphereLight);
 
 // ========== LIGHT HELPER ==========
-var shadowDir = new THREE.SpotLightHelper(redLight);
-scene.add(shadowDir);
+// var shadowDir = new THREE.SpotLightHelper(blueLight);
+// scene.add(shadowDir);
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -999,7 +1091,7 @@ let walkSpeed = 0.001;
 var temp = new THREE.Vector3();// Speed of rotation around the object
 let centerObject = artefact; // Replace 'table' with the object you want to orbit around
 
-character.position.set(0, 0, 0);
+character.position.set(0,0,80);
 character.castShadow = true;
 // ========== ANIMATE ==========
 
@@ -1031,7 +1123,17 @@ function animate(){
   if(bella){
     float(bella, elapsedTime, 0);
   }
-    if (roll) {
+    if(yaw && !roll && !rotate && !pitch){
+      let time = performance.now() * 0.5;
+      camera.rotation.y += THREE.MathUtils.degToRad(0.5);
+    }
+
+    if(pitch && !roll && !rotate && !yaw){
+      let time = performance.now() * 0.5;
+      camera.rotation.x += THREE.MathUtils.degToRad(0.5);
+    }
+
+    if (roll && !rotate && !pitch && !yaw) {
       let time = performance.now() * 0.5;
       let camX = centerObject.position.x;
       let camZ = centerObject.position.z + walkSpeed * time;
@@ -1056,7 +1158,7 @@ function animate(){
       camera.rotation.z += THREE.MathUtils.degToRad(1); // Roll: 10 degrees
       // camera.lookAt(bawahTangga.position);
     }
-    if(rotate){
+    if(rotate && !roll && !pitch && !yaw){
     // Update orbit angle
     let time = performance.now() * 0.5;
     let angle = orbitSpeed * time;
@@ -1254,7 +1356,7 @@ new MTLLoader()
            }
             break;
       case 'q':
-          if(!rotate){
+          if(!pitch && !yaw && !roll && !rotate){
             rotate = true;
             // camera.position.y += 20;
             character.position.set(30,0,30);
@@ -1263,22 +1365,49 @@ new MTLLoader()
             let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
             camera.rotation.x += rotationAmount;
            }
-           else{
+           else if (rotate){
             rotate = false;
             resetCamera()
            }
             break;
 
       case 'e':
-          if(!roll){
+          if(!pitch && !yaw && !roll && !rotate){
             roll = true;
-            character.position.set(0,0,100);
+            character.position.set(0,0,80);
             // camera.position.set(0,0,0);
             camera.lookAt(bawahTangga.position);
 
            }
-           else{
+           else if (roll){
             roll = false;
+            resetCamera()
+           }
+            break;
+
+      case 'y':
+          if(!pitch && !yaw && !roll && !rotate){
+            yaw = true;
+            character.position.set(0,0,0);
+            // camera.position.set(0,0,0);
+            camera.lookAt(bawahTangga.position);
+
+           }
+           else if (yaw){
+            yaw = false;
+            resetCamera()
+           }
+            break;
+      case 'p':
+          if(!pitch && !yaw && !roll && !rotate){
+            pitch = true;
+            character.position.set(0,0,0);
+            // camera.position.set(0,0,0);
+            camera.lookAt(bawahTangga.position);
+
+           }
+           else if (pitch){
+            pitch = false;
             resetCamera()
            }
             break;
