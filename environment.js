@@ -10,9 +10,10 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.shadowMap.enabled = true;
+// renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 var creativeMode = false;
+let rotate = false;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
@@ -794,11 +795,31 @@ var forwardVector;
     const clock = new THREE.Clock();
     const delta = clock.getDelta();
     const time = clock.getElapsedTime();
+    // Define variables for orbit animation
+let orbitRadius = 10; // Radius of orbit circle
+let orbitSpeed = 0.001; 
+var temp = new THREE.Vector3();// Speed of rotation around the object
+let centerObject = artefact; // Replace 'table' with the object you want to orbit around
+
 // ========== ANIMATE ==========
 //loop Animate
 function animate(){
   // controls.update();
   requestAnimationFrame(animate);
+  if(rotate){
+// Update orbit angle
+let time = performance.now() * 0.5;
+let angle = orbitSpeed * time;
+
+// Calculate new camera position based on orbit
+let camX = centerObject.position.x + orbitRadius * Math.sin(angle);
+let camZ = centerObject.position.z + orbitRadius * Math.cos(angle);
+camera.position.set(camX, camera.position.y , camZ);
+
+
+// Point the camera towards the center of the object
+camera.lookAt(centerObject.position);
+  }
      // table2 floating animation
    if (table) {
     table.position.y = Math.sin(clock.getElapsedTime()) * 0.5 + 10;
@@ -982,6 +1003,20 @@ new MTLLoader()
             character.position.set(30,0,30);
            }
             break;
+      case 'q':
+          if(!rotate){
+            rotate = true;
+            camera.position.y += 7;
+// Rotasi kamera ke atas (misalnya, rotasi sebesar 45 derajat ke atas)
+let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
+camera.rotation.x += rotationAmount;
+           }
+           else{
+            rotate = false;
+            resetCamera()
+           }
+            break;
+
   }
 });
 
@@ -997,3 +1032,42 @@ document.addEventListener('keyup', (event) => {
           break;
   }
 });
+let initialCameraPosition = new THREE.Vector3();
+let initialCameraRotation = new THREE.Euler();
+
+// Simpan posisi dan orientasi kamera awal
+initialCameraPosition.copy(camera.position);
+initialCameraRotation.copy(camera.rotation);
+
+// Fungsi untuk kembali ke POV awal
+function resetCamera() {
+    camera.position.copy(initialCameraPosition);
+    camera.rotation.copy(initialCameraRotation);
+}
+// ========== CAMERA ANIMATION ==========
+// Fungsi untuk animasi rotasi kamera
+// function rotateCameraAroundObject(object, duration) {
+//   gsap.to(camera.position, {
+//       duration: duration,
+//       x: object.position.x,
+//       z: object.position.z + 5,
+//       onUpdate: () => {
+//           camera.lookAt(object.position);
+//       },
+//       onComplete: () => {
+//           document.addEventListener('keydown', onKeyPress);
+//       }
+//   });
+// }
+
+// // Panggil fungsi untuk mulai animasi rotasi saat aplikasi dimuat
+//  // Contoh durasi animasi 6 detik
+
+// // Fungsi untuk menangani input tombol 'Q'
+// function onKeyPress(event) {
+//   if (event.key === 'q') {
+//     rotateCameraAroundObject(table, 6);
+//       gsap.killTweensOf(camera.position); // Hentikan animasi jika tombol 'Q' ditekan
+//       document.removeEventListener('keydown', onKeyPress); // Hapus event listener setelah animasi berhenti
+//   }
+// }
