@@ -92,6 +92,7 @@ roof.rotation.set(0, 0.95 , 0);
 roof.position.set(0, 0.5, -53);
 lantai.add( roof );
 
+// Pedestal
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
 var pedestalHead = new THREE.Mesh(geometry, material);
@@ -116,6 +117,13 @@ var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
 var pedestalHead5 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead5, -50);
+
+// Spotlight
+spawnSpotlight(10);
+spawnSpotlight(40);
+spawnSpotlight(70);
+spawnSpotlight(-20);
+spawnSpotlight(-50);
 
 //Stairs 
   //tangga utama
@@ -320,6 +328,27 @@ requestAnimationFrame(animate);
 
 
 // ========== METHODS ==========
+function spawnSpotlight(pos){
+  new MTLLoader()
+    .setPath('assets/spotlight/')
+    .load('spotlight.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/spotlight/')
+        .load('spotlight.obj', function (object) {
+          object.scale.set(0.17,0.17,0.17);
+          // object.position.set(-35, -0.5, 0);
+          object.position.set(-20,-2,pos); //x, y, z
+          object.rotation.x += 3.1;
+          object.rotation.y += -1.6;
+
+          scene.add(object);
+          objectCollider.push(object)
+ 
+        });
+    });
+}
 
 //Spawn pedestal
 function spawnPedestal(poi, pos){
