@@ -42,7 +42,7 @@ const character = new THREE.Mesh(characterGeometry, characterMaterial);
 character.add(camera);
 
 camera.position.set(0, 1, 0); 
-character.position.set(30,20,-50) // Position camera inside the character
+character.position.set(30,0,20) // Position camera inside the character
 character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
@@ -252,444 +252,444 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   kiriTangga.position.set(-35,12,-78);
   scene.add(kiriTangga);
 
-//   //2nd Floor
-//     const lantai2KiriGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
-//     const lantai2KiriMat = new THREE.MeshPhongMaterial();
-//     lantai2KiriMat.color.set(0xfff7eb);
-//     const lantai2KiriPos = {x:-33, y:17.6, z:10};
-//     const lantai2KiriRot = {x:1.575, y:0, z:4.7};
-//     const lantai2KiriImg = 'assets/floor/ceiling_texture.jpg'
-//     const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
-//     loadTexture(lantai2KiriImg ,8, 2, lantai2KiriGeo, lantai2KiriMat, lantai2Kiri, lantai2KiriPos, lantai2KiriRot, scene);
+  //2nd Floor
+    const lantai2KiriGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
+    const lantai2KiriMat = new THREE.MeshPhongMaterial();
+    lantai2KiriMat.color.set(0xfff7eb);
+    const lantai2KiriPos = {x:-33, y:17.6, z:10};
+    const lantai2KiriRot = {x:1.575, y:0, z:4.7};
+    const lantai2KiriImg = 'assets/floor/ceiling_texture.jpg'
+    const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
+    loadTexture(lantai2KiriImg ,8, 2, lantai2KiriGeo, lantai2KiriMat, lantai2Kiri, lantai2KiriPos, lantai2KiriRot, scene);
     
-//     const lantai2KananGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
-//     const lantai2KananMat = new THREE.MeshPhongMaterial();
-//     lantai2KananMat.color.set(0xfff7eb);
-//     const lantai2KananPos = {x:33, y:17.6, z:10};
-//     const lantai2KananRot = {x:1.575, y:0, z:4.7};
-//     const lantai2KananImg = 'assets/floor/ceiling_texture.jpg'
-//     const lantai2Kanan = new THREE.Mesh(lantai2KananGeo, lantai2KananMat);
-//     loadTexture(lantai2KananImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Kanan, lantai2KananPos, lantai2KananRot, scene);
+    const lantai2KananGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
+    const lantai2KananMat = new THREE.MeshPhongMaterial();
+    lantai2KananMat.color.set(0xfff7eb);
+    const lantai2KananPos = {x:33, y:17.6, z:10};
+    const lantai2KananRot = {x:1.575, y:0, z:4.7};
+    const lantai2KananImg = 'assets/floor/ceiling_texture.jpg'
+    const lantai2Kanan = new THREE.Mesh(lantai2KananGeo, lantai2KananMat);
+    loadTexture(lantai2KananImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Kanan, lantai2KananPos, lantai2KananRot, scene);
     
-//     const Lantai2BlkgGeo = new THREE.BoxGeometry(46,23,2, 5, 5); //w h d wS hS dS
-//     const Lantai2BlkgMat = new THREE.MeshPhongMaterial();
-//     Lantai2BlkgMat.color.set(0xfff7eb);
-//     const lantai2BlkgPos = {x:2, y:17.4, z:78.5};
-//     const lantai2BlkgRot = {x:1.575, y:0, z:0};
-//     const lantai2BlkgImg = 'assets/floor/ceiling_texture.jpg'
-//     const lantai2Blkg = new THREE.Mesh(Lantai2BlkgGeo, Lantai2BlkgMat);
-//     loadTexture(lantai2BlkgImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Blkg, lantai2BlkgPos, lantai2BlkgRot, scene);
+    const Lantai2BlkgGeo = new THREE.BoxGeometry(46,23,2, 5, 5); //w h d wS hS dS
+    const Lantai2BlkgMat = new THREE.MeshPhongMaterial();
+    Lantai2BlkgMat.color.set(0xfff7eb);
+    const lantai2BlkgPos = {x:2, y:17.4, z:78.5};
+    const lantai2BlkgRot = {x:1.575, y:0, z:0};
+    const lantai2BlkgImg = 'assets/floor/ceiling_texture.jpg'
+    const lantai2Blkg = new THREE.Mesh(Lantai2BlkgGeo, Lantai2BlkgMat);
+    loadTexture(lantai2BlkgImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Blkg, lantai2BlkgPos, lantai2BlkgRot, scene);
 
-//     //Railing
-//     //kanan dari z -55 dst
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(24,13,-55);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(24,13,-33);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(24,13,-11);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(24,13,11);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(24,13,33);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(24,13,55);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     //KANANNNNNNN
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(-24,13,-55);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(-24,13,-33);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(-24,13,-11);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(-24,13,11);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(-24,13,33);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8,6,6);
-//           object.position.set(-24,13,55);
-//           object.rotation.y += 1.58;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     //Belakangg
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8.5,6,6);
-//           object.position.set(-11,13,68.5);
-//           // object.rotation.y -= 0.01;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
-//     new MTLLoader()
-//     .setPath('assets/railing/')
-//     .load('Balustrade.mtl', function (materials) {
-//       materials.preload();
-//       new OBJLoader()
-//         .setMaterials(materials)
-//         .setPath('assets/railing/')
-//         .load('Balustrade.obj', function (object) {
-//           object.scale.set(8.5,6,6);
-//           object.position.set(13,13,68.5);
-//           // object.rotation.y -= 0.01;
-//           // object.rotation.x += 0.2;
-//           object.receiveShadow = true;
-//           object.castShadow = true;
-//           object.traverse( function ( child ) {
-//             if ( child.isMesh ) {
-//               child.castShadow = true;
-//               child.receiveShadow = true;
-//               child.material.wireframe = false;
-//             }
-//           })
-//           scene.add(object);
-//           objectCollider.push(object);
-//         });
-//     });
+    //Railing
+    //kanan dari z -55 dst
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,-55);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,-33);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,-11);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,11);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,33);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,55);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    //KANANNNNNNN
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,-55);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,-33);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,-11);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,11);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,33);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,55);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    //Belakangg
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8.5,6,6);
+          object.position.set(-11,13,68.5);
+          // object.rotation.y -= 0.01;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8.5,6,6);
+          object.position.set(13,13,68.5);
+          // object.rotation.y -= 0.01;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
 
 
 
-//   //Display wall
-//    //kiri
-//    new MTLLoader()
-//    .setPath('assets/wall/')
-//    .load('display_wall.mtl', function (materials) {
-//      materials.preload();
-//      new OBJLoader()
-//        .setMaterials(materials)
-//        .setPath('assets/wall/')
-//        .load('display_wall.obj', function (object) {
-//          object.scale.set(12,7,8);
-//          object.position.set(-44,10,0);
-//          object.rotation.y += 1.58;
-//          // object.rotation.x += 0.2;
-//          object.receiveShadow = true;
-//          object.castShadow = true;
-//          object.traverse( function ( child ) {
-//            if ( child.isMesh ) {
-//              child.castShadow = true;
-//              child.receiveShadow = true;
-//              child.material.wireframe = false;
-//            }
-//          })
-//          scene.add(object);
-//         //  objectCollider.push(object);
-//        });
-//    });
-//    //kanan
-//    new MTLLoader()
-//    .setPath('assets/wall/')
-//    .load('display_wall.mtl', function (materials) {
-//      materials.preload();
-//      new OBJLoader()
-//        .setMaterials(materials)
-//        .setPath('assets/wall/')
-//        .load('display_wall.obj', function (object) {
-//          object.scale.set(12,7,8);
-//          object.position.set(-20,10,0);
-//          object.rotation.y += 1.58;
-//         //  object.rotation.x += 0.2;
-//          object.receiveShadow = true;
-//          object.castShadow = true;
-//          object.traverse( function ( child ) {
-//            if ( child.isMesh ) {
-//              child.castShadow = true;
-//              child.receiveShadow = true;
-//              child.material.wireframe = false;
-//            }
-//          })
-//          scene.add(object);
-//         //  objectCollider.push(object);
-//        });
-//    });
+  //Display wall
+   //kiri
+   new MTLLoader()
+   .setPath('assets/wall/')
+   .load('display_wall.mtl', function (materials) {
+     materials.preload();
+     new OBJLoader()
+       .setMaterials(materials)
+       .setPath('assets/wall/')
+       .load('display_wall.obj', function (object) {
+         object.scale.set(12,7,8);
+         object.position.set(-44,10,0);
+         object.rotation.y += 1.58;
+         // object.rotation.x += 0.2;
+         object.receiveShadow = true;
+         object.castShadow = true;
+         object.traverse( function ( child ) {
+           if ( child.isMesh ) {
+             child.castShadow = true;
+             child.receiveShadow = true;
+             child.material.wireframe = false;
+           }
+         })
+         scene.add(object);
+        //  objectCollider.push(object);
+       });
+   });
+   //kanan
+   new MTLLoader()
+   .setPath('assets/wall/')
+   .load('display_wall.mtl', function (materials) {
+     materials.preload();
+     new OBJLoader()
+       .setMaterials(materials)
+       .setPath('assets/wall/')
+       .load('display_wall.obj', function (object) {
+         object.scale.set(12,7,8);
+         object.position.set(-20,10,0);
+         object.rotation.y += 1.58;
+        //  object.rotation.x += 0.2;
+         object.receiveShadow = true;
+         object.castShadow = true;
+         object.traverse( function ( child ) {
+           if ( child.isMesh ) {
+             child.castShadow = true;
+             child.receiveShadow = true;
+             child.material.wireframe = false;
+           }
+         })
+         scene.add(object);
+        //  objectCollider.push(object);
+       });
+   });
 
    let table;
    let table2;
