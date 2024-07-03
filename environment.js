@@ -249,10 +249,10 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead2 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead2,-35 , 40, -20);
 
-var geometry = new THREE.BoxGeometry(3,3,3);
-var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-var pedestalHead3 = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead3,-35 , 70, -20);
+// var geometry = new THREE.BoxGeometry(3,3,3);
+// var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+// var pedestalHead3 = new THREE.Mesh(geometry, material);
+// spawnPedestal(pedestalHead3,-35 , 70, -20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
@@ -274,10 +274,10 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead7 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead7,35 , 40, 20);
 
-var geometry = new THREE.BoxGeometry(3,3,3);
-var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-var pedestalHead8 = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead8,35 , 70, 20);
+// var geometry = new THREE.BoxGeometry(3,3,3);
+// var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+// var pedestalHead8 = new THREE.Mesh(geometry, material);
+// spawnPedestal(pedestalHead8,35 , 70, 20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
@@ -1090,7 +1090,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
       });
   });
 //cone light
-const coneGeo = new THREE.ConeGeometry( 30, 140, 32 ); 
+const coneGeo = new THREE.ConeGeometry( 30, 70, 32 ); 
 const coneMat = new THREE.MeshBasicMaterial( {
   color: 0xAAFF00,
   transparent : true,
@@ -1132,12 +1132,12 @@ blueLight.angle = Math.PI / 9;
 scene.add(blueLight);
 scene.add(blueLight.target);
 
-var greenLight = new THREE.SpotLight(0xAAFF00, 500,50);
+var greenLight = new THREE.SpotLight(0xAAFF00, 100,50);
 // spotLight.position.set(-10,10,0);//posisi e dimana
 greenLight.position.set(0, 100, -5);//posisi e dimana
 greenLight.target.position.set(0,0,0);//arah e kemana
 greenLight.castShadow = true;
-greenLight.angle = Math.PI / 15;
+greenLight.angle = Math.PI / 10;
 scene.add(greenLight);
 scene.add(greenLight.target);
 
