@@ -932,7 +932,7 @@ function animate(){
     // controls.update();
     requestAnimationFrame(animate);
 
-    if (roll) {
+    if (roll && !rotate) {
       let time = performance.now() * 0.5;
       let camX = centerObject.position.x;
       let camZ = centerObject.position.z + walkSpeed * time;
@@ -957,7 +957,7 @@ function animate(){
       camera.rotation.z += THREE.MathUtils.degToRad(1); // Roll: 10 degrees
       // camera.lookAt(bawahTangga.position);
     }
-    if(rotate){
+    if(rotate && !roll){
     // Update orbit angle
     let time = performance.now() * 0.5;
     let angle = orbitSpeed * time;
@@ -1155,7 +1155,7 @@ new MTLLoader()
            }
             break;
       case 'q':
-          if(!rotate){
+          if(!rotate && !roll){
             rotate = true;
             // camera.position.y += 20;
             character.position.set(30,0,30);
@@ -1164,21 +1164,21 @@ new MTLLoader()
             let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
             camera.rotation.x += rotationAmount;
            }
-           else{
+           else if (rotate){
             rotate = false;
             resetCamera()
            }
             break;
 
       case 'e':
-          if(!roll){
+          if(!roll && !rotate){
             roll = true;
             character.position.set(0,0,100);
             // camera.position.set(0,0,0);
             camera.lookAt(bawahTangga.position);
 
            }
-           else{
+           else if (roll){
             roll = false;
             resetCamera()
            }
