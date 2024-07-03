@@ -23,7 +23,7 @@ character.add(camera);
 
 camera.position.set(0, 0.1, 0); 
 character.position.set(30,1,30) // Position camera inside the character
-character.scale.set(2,2,2) // Position camera inside the character
+character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
 // Tambahkan dasar plane
@@ -109,6 +109,13 @@ function getRightVector() {
     right.normalize();
     return right;
 }
+function getForwardVectorCreative() {
+    const forward = new THREE.Vector3();
+    camera.getWorldDirection(forward);
+    return forward;
+}
+
+// Function to get the right direction
 function getRightVectorCreative() {
     const right = new THREE.Vector3();
     camera.getWorldDirection(right);
@@ -116,14 +123,8 @@ function getRightVectorCreative() {
     return right;
 }
 
-function getForwardVectorCreative() {
-    const forward = new THREE.Vector3();
-    camera.getWorldDirection(forward);
-    return forward;
-}
 
-        let forwardVector;
-        let rightVector;
+
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
@@ -212,13 +213,12 @@ document.addEventListener('keydown', (event) => {
             moveDirection.x = 1;
             break;
         case ' ':
-            if(!creativeMode){
-                creativeMode = true;
-            }
-            else{
-                creativeMode = false;
-                character.position.set(30,1,30)
-            }
+           if(!creativeMode){
+            creativeMode = true
+           }
+           else{
+            creativeMode = false
+           }
             break;
     }
 });
