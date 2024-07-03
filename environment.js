@@ -41,7 +41,7 @@ const character = new THREE.Mesh(characterGeometry, characterMaterial);
 character.add(camera);
 
 camera.position.set(0, 1, 0); 
-character.position.set(30,0,10) // Position camera inside the character
+character.position.set(30,20,100) // Position camera inside the character
 character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
@@ -255,7 +255,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
     const lantai2KananGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
     const lantai2KananMat = new THREE.MeshPhongMaterial();
     lantai2KananMat.color.set(0xfff7eb);
-    const lantai2KananPos = {x:35, y:17.6, z:10};
+    const lantai2KananPos = {x:33, y:17.6, z:10};
     const lantai2KananRot = {x:1.575, y:0, z:4.7};
     const lantai2KananImg = 'assets/floor/ceiling_texture.jpg'
     const lantai2Kanan = new THREE.Mesh(lantai2KananGeo, lantai2KananMat);
@@ -264,7 +264,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
     const Lantai2BlkgGeo = new THREE.BoxGeometry(46,23,2, 5, 5); //w h d wS hS dS
     const Lantai2BlkgMat = new THREE.MeshPhongMaterial();
     Lantai2BlkgMat.color.set(0xfff7eb);
-    const lantai2BlkgPos = {x:2, y:17.6, z:80};
+    const lantai2BlkgPos = {x:2, y:17.4, z:78.5};
     const lantai2BlkgRot = {x:1.575, y:0, z:0};
     const lantai2BlkgImg = 'assets/floor/ceiling_texture.jpg'
     const lantai2Blkg = new THREE.Mesh(Lantai2BlkgGeo, Lantai2BlkgMat);
@@ -573,6 +573,58 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
           objectCollider.push(object);
         });
     });
+    //Belakangg
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8.5,6,6);
+          object.position.set(-11,13,68.5);
+          // object.rotation.y -= 0.01;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8.5,6,6);
+          object.position.set(13,13,68.5);
+          // object.rotation.y -= 0.01;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+
 
 
   //Display wall
@@ -739,7 +791,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
 
 
 // ========== LIGHT ==========
-scene.fog = new THREE.FogExp2(0x000000, 0.02);
+// scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
 pointLight.position.set(0,30,10);
 scene.add(pointLight);
