@@ -10,10 +10,11 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-// renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 var creativeMode = false;
 let rotate = false;
+let roll = false;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
@@ -41,7 +42,7 @@ const character = new THREE.Mesh(characterGeometry, characterMaterial);
 character.add(camera);
 
 camera.position.set(0, 1, 0); 
-character.position.set(30,0,10) // Position camera inside the character
+character.position.set(30,0,20) // Position camera inside the character
 character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
@@ -145,6 +146,15 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
 // spawnPedestal(pedestalHead10,35 , -50, 20);
 
 //Stairs 
+  //pigura
+    //box tangga
+    const pigguraGeo = new THREE.BoxGeometry(12 ,14, 0.3); 
+    const piguraMat = new THREE.MeshPhongMaterial();//({color: 0x00ff00});
+    const pigura = new THREE.Mesh(pigguraGeo, piguraMat);
+    const piguraPos = {x: 0, y :25, z:-88};
+    const piguraRot = {x: 0, y :0, z: 8};
+    const piguraImg = 'assets/wall/fucuan1.jpg'
+    loadTexture(piguraImg, 1, 1, pigguraGeo, piguraMat, pigura, piguraPos, piguraPos, scene);
   //tangga utama
   new MTLLoader()
   .setPath('assets/stair/')
@@ -251,14 +261,381 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
     const lantai2KiriImg = 'assets/floor/ceiling_texture.jpg'
     const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
     loadTexture(lantai2KiriImg ,8, 2, lantai2KiriGeo, lantai2KiriMat, lantai2Kiri, lantai2KiriPos, lantai2KiriRot, scene);
-    // const lantai2KiriGeo = new THREE.BoxGeometry(160,19,2, 5, 5); //w h d wS hS dS
-    // const lantai2KiriMat = new THREE.MeshPhongMaterial({color: 0xff00ff});
-    // const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
-    // lantai2Kiri.position.set(-35, 17.6, 10);
-    // lantai2Kiri.rotation.set(1.575, 0, 4.7);
-    // lantai2Kiri.receiveShadow = true;
-    // lantai2Kiri.castShadow= true;
-    // scene.add(lantai2Kiri);
+    
+    const lantai2KananGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
+    const lantai2KananMat = new THREE.MeshPhongMaterial();
+    lantai2KananMat.color.set(0xfff7eb);
+    const lantai2KananPos = {x:33, y:17.6, z:10};
+    const lantai2KananRot = {x:1.575, y:0, z:4.7};
+    const lantai2KananImg = 'assets/floor/ceiling_texture.jpg'
+    const lantai2Kanan = new THREE.Mesh(lantai2KananGeo, lantai2KananMat);
+    loadTexture(lantai2KananImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Kanan, lantai2KananPos, lantai2KananRot, scene);
+    
+    const Lantai2BlkgGeo = new THREE.BoxGeometry(46,23,2, 5, 5); //w h d wS hS dS
+    const Lantai2BlkgMat = new THREE.MeshPhongMaterial();
+    Lantai2BlkgMat.color.set(0xfff7eb);
+    const lantai2BlkgPos = {x:2, y:17.4, z:78.5};
+    const lantai2BlkgRot = {x:1.575, y:0, z:0};
+    const lantai2BlkgImg = 'assets/floor/ceiling_texture.jpg'
+    const lantai2Blkg = new THREE.Mesh(Lantai2BlkgGeo, Lantai2BlkgMat);
+    loadTexture(lantai2BlkgImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Blkg, lantai2BlkgPos, lantai2BlkgRot, scene);
+
+    //Railing
+    //kanan dari z -55 dst
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,-55);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,-33);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,-11);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,11);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,33);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(24,13,55);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    //KANANNNNNNN
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,-55);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,-33);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,-11);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,11);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,33);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8,6,6);
+          object.position.set(-24,13,55);
+          object.rotation.y += 1.58;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    //Belakangg
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8.5,6,6);
+          object.position.set(-11,13,68.5);
+          // object.rotation.y -= 0.01;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+    new MTLLoader()
+    .setPath('assets/railing/')
+    .load('Balustrade.mtl', function (materials) {
+      materials.preload();
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('assets/railing/')
+        .load('Balustrade.obj', function (object) {
+          object.scale.set(8.5,6,6);
+          object.position.set(13,13,68.5);
+          // object.rotation.y -= 0.01;
+          // object.rotation.x += 0.2;
+          object.receiveShadow = true;
+          object.castShadow = true;
+          object.traverse( function ( child ) {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.wireframe = false;
+            }
+          })
+          scene.add(object);
+          objectCollider.push(object);
+        });
+    });
+
+
 
   //Display wall
    //kiri
@@ -284,7 +661,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
            }
          })
          scene.add(object);
-         objectCollider.push(object);
+        //  objectCollider.push(object);
        });
    });
    //kanan
@@ -310,7 +687,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
            }
          })
          scene.add(object);
-         objectCollider.push(object);
+        //  objectCollider.push(object);
        });
    });
 
@@ -424,20 +801,40 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
 
 
 // ========== LIGHT ==========
-scene.fog = new THREE.FogExp2(0x000000, 0.02);
+// scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
 pointLight.position.set(0,30,10);
+pointLight.castShadow = true;
 scene.add(pointLight);
 
 const light = new THREE.AmbientLight( 0xcfe2f3, 0.1 ); // soft white light
 scene.add( light );
 
+//upstair spotlight
+var redLight = new THREE.SpotLight(0xff5b5b, 90,50);
+// spotLight.position.set(-10,10,0);//posisi e dimana
+redLight.position.set(30, 55, -70);//posisi e dimana
+redLight.target.position.set(0, 25, -88);//arah e kemana
+redLight.castShadow = true;
+redLight.angle = Math.PI / 9;
+scene.add(redLight);
+scene.add(redLight.target);
+
+var blueLight = new THREE.SpotLight(0x58E6FF, 90,50);
+// spotLight.position.set(-10,10,0);//posisi e dimana
+blueLight.position.set(-30, 55, -70);//posisi e dimana
+blueLight.target.position.set(0, 25, -88);//arah e kemana
+blueLight.castShadow = true;
+blueLight.angle = Math.PI / 9;
+scene.add(blueLight);
+scene.add(blueLight.target);
+
 // var hemisphereLight = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.17); // color dari langit, color dari tanah, intensitas
 // scene.add(hemisphereLight);
 
 // ========== LIGHT HELPER ==========
-// var shadowDir = new THREE.PointLightHelper(pointLight);
-// scene.add(shadowDir);
+var shadowDir = new THREE.SpotLightHelper(redLight);
+scene.add(shadowDir);
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -483,27 +880,56 @@ var forwardVector;
     // Define variables for orbit animation
 let orbitRadius = 10; // Radius of orbit circle
 let orbitSpeed = 0.001; 
+let walkSpeed = 0.001; 
 var temp = new THREE.Vector3();// Speed of rotation around the object
 let centerObject = artefact; // Replace 'table' with the object you want to orbit around
 
+character.position.set(0, 0, 0);
+character.castShadow = true;
 // ========== ANIMATE ==========
 //loop Animate
 function animate(){
-  // controls.update();
-  requestAnimationFrame(animate);
-  if(rotate){
-// Update orbit angle
-let time = performance.now() * 0.5;
-let angle = orbitSpeed * time;
+    // controls.update();
+    requestAnimationFrame(animate);
 
-// Calculate new camera position based on orbit
-let camX = centerObject.position.x + orbitRadius * Math.sin(angle);
-let camZ = centerObject.position.z + orbitRadius * Math.cos(angle);
-camera.position.set(camX, camera.position.y , camZ);
+    if (roll) {
+      let time = performance.now() * 0.5;
+      let camX = centerObject.position.x;
+      let camZ = centerObject.position.z + walkSpeed * time;
+      // camera.position.set(camX, camera.position.y, -camZ);
+      let direction = new THREE.Vector3();
+      direction.addScaledVector(forwardVector, 0.5);
+      direction.addScaledVector(rightVector, moveDirection.x);
+      character.position.addScaledVector(direction, moveSpeed);
+      const chara = new THREE.Box3().setFromObject(character);
+      for (const collisionBox of objectCollider) {
+        const collisionBoxBB = new THREE.Box3().setFromObject(collisionBox);
+        if (collisionBoxBB.intersectsBox(chara)) {
+              // controls.moveForward(-moveDirection.z * moveSpeed);
+              // controls.moveRight(-moveDirection.x * moveSpeed);
+              character.position.addScaledVector(direction, -moveSpeed);
+              // character.position.addScaledVector(moveDirection, -moveSpeed);
+          }
+        }
+      
+      // Roll the camera around the z-axis
+      // camera.rotation.z += 0.01; // Adjust the value as needed to control the roll speed
+      camera.rotation.z += THREE.MathUtils.degToRad(1); // Roll: 10 degrees
+      // camera.lookAt(bawahTangga.position);
+    }
+    if(rotate){
+    // Update orbit angle
+    let time = performance.now() * 0.5;
+    let angle = orbitSpeed * time;
+
+    // Calculate new camera position based on orbit
+    let camX = centerObject.position.x + orbitRadius * Math.sin(angle);
+    let camZ = centerObject.position.z + orbitRadius * Math.cos(angle);
+    camera.position.set(camX, camera.position.y, camZ);
 
 
-// Point the camera towards the center of the object
-camera.lookAt(centerObject.position);
+    // Point the camera towards the center of the object
+    camera.lookAt(centerObject.position);
   }
      // table2 floating animation
    if (table) {
@@ -525,17 +951,17 @@ camera.lookAt(centerObject.position);
     direction.addScaledVector(forwardVector, moveDirection.z);
     direction.addScaledVector(rightVector, moveDirection.x);
     character.position.addScaledVector(direction, moveSpeed);
-    const characterBB = new THREE.Box3().setFromObject(character);
+    const chara = new THREE.Box3().setFromObject(character);
     for (const collisionBox of objectCollider) {
         const collisionBoxBB = new THREE.Box3().setFromObject(collisionBox);
-        if (collisionBoxBB.intersectsBox(characterBB)) {
+        if (collisionBoxBB.intersectsBox(chara)) {
               // controls.moveForward(-moveDirection.z * moveSpeed);
               // controls.moveRight(-moveDirection.x * moveSpeed);
               character.position.addScaledVector(direction, -moveSpeed);
               // character.position.addScaledVector(moveDirection, -moveSpeed);
           }
+        }
         renderer.render(scene, camera);
-  }
 }
 requestAnimationFrame(animate);
 
@@ -691,10 +1117,12 @@ new MTLLoader()
       case 'q':
           if(!rotate){
             rotate = true;
-            camera.position.y += 7;
-// Rotasi kamera ke atas (misalnya, rotasi sebesar 45 derajat ke atas)
-let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
-camera.rotation.x += rotationAmount;
+            // camera.position.y += 20;
+            character.position.set(30,0,30);
+            camera.position.set(0,20,0);
+            // Rotasi kamera ke atas (misalnya, rotasi sebesar 45 derajat ke atas)
+            let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
+            camera.rotation.x += rotationAmount;
            }
            else{
             rotate = false;
@@ -702,6 +1130,19 @@ camera.rotation.x += rotationAmount;
            }
             break;
 
+      case 'e':
+          if(!roll){
+            roll = true;
+            character.position.set(0,0,100);
+            // camera.position.set(0,0,0);
+            camera.lookAt(bawahTangga.position);
+
+           }
+           else{
+            roll = false;
+            resetCamera()
+           }
+            break;
   }
 });
 
