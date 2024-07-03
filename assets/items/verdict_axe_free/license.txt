@@ -1,0 +1,11 @@
+Model Information:
+* title:	Verdict Axe Free
+* source:	https://sketchfab.com/3d-models/verdict-axe-free-408d8c9ed9014fdaae2a97ad448d4519
+* author:	Art_workshop (https://sketchfab.com/art_workshop)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Verdict Axe Free" (https://sketchfab.com/3d-models/verdict-axe-free-408d8c9ed9014fdaae2a97ad448d4519) by Art_workshop (https://sketchfab.com/art_workshop) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

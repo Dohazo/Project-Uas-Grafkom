@@ -1,0 +1,11 @@
+Model Information:
+* title:	Sparkle mask
+* source:	https://sketchfab.com/3d-models/sparkle-mask-f70ee15de88947308268f85aef83afeb
+* author:	Rushu01 (https://sketchfab.com/Rushu01)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Sparkle mask" (https://sketchfab.com/3d-models/sparkle-mask-f70ee15de88947308268f85aef83afeb) by Rushu01 (https://sketchfab.com/Rushu01) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
