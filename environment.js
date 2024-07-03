@@ -44,7 +44,7 @@ const character = new THREE.Mesh(characterGeometry, characterMaterial);
 character.add(camera);
 
 camera.position.set(0, 1, 0); 
-character.position.set(30,0,-55) // Position camera inside the character
+character.position.set(30,0,20) // Position camera inside the character
 character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
@@ -232,22 +232,27 @@ lantai.add( roof );
   //box tangga kiri
   const kiriTanggaGeo = new THREE.BoxGeometry(18,14,24); 
   const kiriTanggaMat = new THREE.MeshPhongMaterial({color: 0xffff00});
-  const kiriTangga = new THREE.Mesh(kiriTanggaGeo, kananTangaMat);
+  const kiriTangga = new THREE.Mesh(kiriTanggaGeo, kiriTanggaMat);
   kiriTangga.position.set(-35,12,-78);
   scene.add(kiriTangga);
 
-
-
   //2nd Floor
-    // const lantai2Geo = new THREE.BoxGeometry(90,180,1, 5, 5); //w h d wS hS dS
-    // const lantai2Mat = new THREE.MeshPhongMaterial();
-    // lantai2Mat.color.set(0xfff7eb);
-    // const lantai2Pos = {x:0, y:-5, z:0};
-    // const lantai2Rot = {x:1.575, y:0, z:0};
-    // const lantai2Img = 'assets/floor/floor_tiles.jpeg'
-    // const lantai2 = new THREE.Mesh(lantai2Geo, lantai2Mat);
-    // loadTexture(lantai2Img ,8, 13, lantai2Geo, lantai2Mat, lantai2, lantai2Pos, lantai2Rot, scene);
-
+    // const lantai2KiriGeo = new THREE.BoxGeometry(160,19,2, 5, 5); //w h d wS hS dS
+    // const lantai2KiriMat = new THREE.MeshPhongMaterial();
+    // lantai2KiriMat.color.set(0xfff7eb);
+    // const lantai2KiriPos = {x:-35, y:17.6, z:10};
+    // const lantai2KiriRot = {x:1.575, y:0, z:4.7};
+    // const lantai2KiriImg = 'assets/floor/ceiling_texture.jpg'
+    // const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
+    // loadTexture(lantai2KiriImg ,1, 1, lantai2KiriGeo, lantai2KiriMat, lantai2Kiri, lantai2KiriPos, lantai2KiriRot, scene);
+    const lantai2KiriGeo = new THREE.BoxGeometry(160,19,2, 5, 5); //w h d wS hS dS
+    const lantai2KiriMat = new THREE.MeshPhongMaterial({color: 0xff00ff});
+    const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
+    lantai2Kiri.position.set(-35, 17.6, 10);
+    lantai2Kiri.rotation.set(1.575, 0, 4.7);
+    lantai2Kiri.receiveShadow = true;
+    lantai2Kiri.castShadow= true;
+    scene.add(lantai2Kiri);
 
   //setup camera  
   // camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
@@ -277,11 +282,11 @@ scene.add(hemisphereLight);
   directionalLight.shadow.camera.bottom = -50; // Far plane
   scene.add(directionalLight);
   scene.add(directionalLight.target);
-  var shadowDir = new THREE.CameraHelper(directionalLight.shadow.camera);
-  scene.add(shadowDir)
+  // var shadowDir = new THREE.CameraHelper(directionalLight.shadow.camera);
+  // scene.add(shadowDir)
 
-var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
-scene.add(directionalLightHelper);
+// var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
+// scene.add(directionalLightHelper);
 
 //MOVEMENT
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
