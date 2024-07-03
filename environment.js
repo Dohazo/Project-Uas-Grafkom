@@ -14,6 +14,7 @@ renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 var creativeMode = false;
 let rotate = false;
+let roll = false;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
@@ -803,6 +804,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
 // scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
 pointLight.position.set(0,30,10);
+pointLight.castShadow = true;
 scene.add(pointLight);
 
 const light = new THREE.AmbientLight( 0xcfe2f3, 0.1 ); // soft white light
@@ -859,14 +861,43 @@ var forwardVector;
     // Define variables for orbit animation
 let orbitRadius = 10; // Radius of orbit circle
 let orbitSpeed = 0.001; 
+let walkSpeed = 0.001; 
 var temp = new THREE.Vector3();// Speed of rotation around the object
 let centerObject = artefact; // Replace 'table' with the object you want to orbit around
 
+character.position.set(0,0,100);
+character.castShadow = true;
 // ========== ANIMATE ==========
 //loop Animate
 function animate(){
     // controls.update();
     requestAnimationFrame(animate);
+
+    if (roll) {
+      let time = performance.now() * 0.5;
+      let camX = centerObject.position.x;
+      let camZ = centerObject.position.z + walkSpeed * time;
+      // camera.position.set(camX, camera.position.y, -camZ);
+      let direction = new THREE.Vector3();
+      direction.addScaledVector(forwardVector, 0.5);
+      direction.addScaledVector(rightVector, moveDirection.x);
+      character.position.addScaledVector(direction, moveSpeed);
+      const chara = new THREE.Box3().setFromObject(character);
+      for (const collisionBox of objectCollider) {
+        const collisionBoxBB = new THREE.Box3().setFromObject(collisionBox);
+        if (collisionBoxBB.intersectsBox(chara)) {
+              // controls.moveForward(-moveDirection.z * moveSpeed);
+              // controls.moveRight(-moveDirection.x * moveSpeed);
+              character.position.addScaledVector(direction, -moveSpeed);
+              // character.position.addScaledVector(moveDirection, -moveSpeed);
+          }
+        }
+      
+      // Roll the camera around the z-axis
+      // camera.rotation.z += 0.01; // Adjust the value as needed to control the roll speed
+      camera.rotation.z += THREE.MathUtils.degToRad(1); // Roll: 10 degrees
+      // camera.lookAt(bawahTangga.position);
+    }
     if(rotate){
     // Update orbit angle
     let time = performance.now() * 0.5;
@@ -901,10 +932,10 @@ function animate(){
     direction.addScaledVector(forwardVector, moveDirection.z);
     direction.addScaledVector(rightVector, moveDirection.x);
     character.position.addScaledVector(direction, moveSpeed);
-    const characterBB = new THREE.Box3().setFromObject(character);
+    const chara = new THREE.Box3().setFromObject(character);
     for (const collisionBox of objectCollider) {
         const collisionBoxBB = new THREE.Box3().setFromObject(collisionBox);
-        if (collisionBoxBB.intersectsBox(characterBB)) {
+        if (collisionBoxBB.intersectsBox(chara)) {
               // controls.moveForward(-moveDirection.z * moveSpeed);
               // controls.moveRight(-moveDirection.x * moveSpeed);
               character.position.addScaledVector(direction, -moveSpeed);
@@ -1083,10 +1114,10 @@ new MTLLoader()
       case 'e':
           if(!roll){
             roll = true;
-            camera.position.y += 20;
-            // Rotasi kamera ke atas (misalnya, rotasi sebesar 45 derajat ke atas)
-            let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
-            camera.rotation.x += rotationAmount;
+            character.position.set(0,0,100);
+            // camera.position.set(0,0,0);
+            camera.lookAt(bawahTangga.position);
+
            }
            else{
             roll = false;
