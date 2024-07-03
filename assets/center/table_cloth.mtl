@@ -1,0 +1,34 @@
+# Blender 3.3.1 MTL File: 'Low-Poly_TableCloth.blend'
+# www.blender.org
+
+newmtl Cloth
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Ns -s 2 2 2 C:/Users/naoya/Desktop/CGTrader/TextureAssets/Texture/CC0_Textures/Fabric037/Fabric037_2K_Roughness.jpg
+map_Bump -s 2 2 2 -bm 1.000000 C:/Users/naoya/Desktop/CGTrader/TextureAssets/Texture/CC0_Textures/Fabric037/Fabric037_2K_NormalGL.jpg
+
+newmtl rubber
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.581464 0.555777 0.402517
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl wood
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd -o 0 0.2 0 -s 4 4 4 C:/Users/naoya/Desktop/CGTrader/TextureAssets/Texture/CC0_Textures/Wood048/Wood048_2K_Color.jpg
+map_Ns -o 0 0.2 0 -s 4 4 4 C:/Users/naoya/Desktop/CGTrader/TextureAssets/Texture/CC0_Textures/Wood048/Wood048_2K_Roughness.jpg
+map_Bump -o 0 0.2 0 -s 4 4 4 -bm 1.000000 C:/Users/naoya/Desktop/CGTrader/TextureAssets/Texture/CC0_Textures/Wood048/Wood048_2K_NormalGL.jpg
