@@ -10,7 +10,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-// renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 var creativeMode = false;
 let rotate = false;
@@ -743,6 +743,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
 scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
 pointLight.position.set(0,30,10);
+pointLight.castShadow = true;
 scene.add(pointLight);
 
 const light = new THREE.AmbientLight( 0xcfe2f3, 0.1 ); // soft white light
@@ -803,6 +804,8 @@ let walkSpeed = 0.001;
 var temp = new THREE.Vector3();// Speed of rotation around the object
 let centerObject = artefact; // Replace 'table' with the object you want to orbit around
 
+character.position.set(0,0,100);
+character.castShadow = true;
 // ========== ANIMATE ==========
 //loop Animate
 function animate(){
@@ -813,7 +816,21 @@ function animate(){
       let time = performance.now() * 0.5;
       let camX = centerObject.position.x;
       let camZ = centerObject.position.z + walkSpeed * time;
-      camera.position.set(camX, camera.position.y, -camZ);
+      // camera.position.set(camX, camera.position.y, -camZ);
+      let direction = new THREE.Vector3();
+      direction.addScaledVector(forwardVector, 0.5);
+      direction.addScaledVector(rightVector, moveDirection.x);
+      character.position.addScaledVector(direction, moveSpeed);
+      const chara = new THREE.Box3().setFromObject(character);
+      for (const collisionBox of objectCollider) {
+        const collisionBoxBB = new THREE.Box3().setFromObject(collisionBox);
+        if (collisionBoxBB.intersectsBox(chara)) {
+              // controls.moveForward(-moveDirection.z * moveSpeed);
+              // controls.moveRight(-moveDirection.x * moveSpeed);
+              character.position.addScaledVector(direction, -moveSpeed);
+              // character.position.addScaledVector(moveDirection, -moveSpeed);
+          }
+        }
       
       // Roll the camera around the z-axis
       // camera.rotation.z += 0.01; // Adjust the value as needed to control the roll speed
@@ -854,17 +871,17 @@ function animate(){
     direction.addScaledVector(forwardVector, moveDirection.z);
     direction.addScaledVector(rightVector, moveDirection.x);
     character.position.addScaledVector(direction, moveSpeed);
-    const characterBB = new THREE.Box3().setFromObject(character);
+    const chara = new THREE.Box3().setFromObject(character);
     for (const collisionBox of objectCollider) {
         const collisionBoxBB = new THREE.Box3().setFromObject(collisionBox);
-        if (collisionBoxBB.intersectsBox(characterBB)) {
+        if (collisionBoxBB.intersectsBox(chara)) {
               // controls.moveForward(-moveDirection.z * moveSpeed);
               // controls.moveRight(-moveDirection.x * moveSpeed);
               character.position.addScaledVector(direction, -moveSpeed);
               // character.position.addScaledVector(moveDirection, -moveSpeed);
           }
+        }
         renderer.render(scene, camera);
-  }
 }
 requestAnimationFrame(animate);
 
@@ -1036,7 +1053,7 @@ new MTLLoader()
       case 'e':
           if(!roll){
             roll = true;
-            character.position.set(30,0,0);
+            character.position.set(0,0,100);
             // camera.position.set(0,0,0);
             camera.lookAt(bawahTangga.position);
 
