@@ -6,6 +6,20 @@ import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 
 // ========== SETUP ==========
+// Create a canvas element for the gradient texture
+const gradientCanvas = document.createElement('canvas');
+gradientCanvas.width = 512;
+gradientCanvas.height = 512;
+const ctx = gradientCanvas.getContext('2d');
+const gradient = ctx.createLinearGradient(0, 0, 0, gradientCanvas.height);
+gradient.addColorStop(0, '#171D20'); // Blue
+gradient.addColorStop(1, '#171D20'); // LightBlue
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height);
+
+// Create a texture from the canvas
+const gradientTexture = new THREE.CanvasTexture(gradientCanvas);
+
 //Canvas Renderer
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -20,6 +34,7 @@ let pitch = false;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
+scene.background = gradientTexture;
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 const controls = new PointerLockControls(camera, document.body);
@@ -49,6 +64,121 @@ character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
 // ========== OBJECT ==========
+// dodoco
+
+let dodoco_king;
+const dodoco_king_loader = new GLTFLoader();
+  dodoco_king_loader.load('/assets/items/dodoco_king_-_genshin_impact/scene.gltf',(glscene)=>{
+
+    dodoco_king = glscene.scene;
+    dodoco_king.scale.set(0.25,0.25,0.25)
+    dodoco_king.receiveShadow = true;
+    dodoco_king.castShadow = true;
+    dodoco_king.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    dodoco_king.rotation.set(0,Math.PI/2,0)
+    dodoco_king.position.set(-35 , 1, -20)
+    scene.add(dodoco_king);
+
+  })
+let sparkle_mask;
+const sparkle_mask_loader = new GLTFLoader();
+  sparkle_mask_loader.load('/assets/items/sparkle_mask/scene.gltf',(glscene)=>{
+    sparkle_mask = glscene.scene;
+    
+    sparkle_mask.position.set(-35 , 1, 40)
+    sparkle_mask.rotation.set(0,Math.PI/2,0)
+    sparkle_mask.scale.set(0.2,0.2,0.2)
+    sparkle_mask.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(sparkle_mask);
+  })
+let shiro_weapon;
+const shiro_weapon_loader = new GLTFLoader();
+  shiro_weapon_loader.load('/assets/items/blue_archive_shirokos_rifle/scene.gltf',(glscene)=>{
+    shiro_weapon = glscene.scene;
+    
+    shiro_weapon.position.set(-35,1,10)
+    shiro_weapon.rotation.set(Math.PI/4,Math.PI/4,0)
+    shiro_weapon.scale.set(0.25,0.25,0.25)
+    shiro_weapon.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(shiro_weapon);
+  })
+
+
+let amos_bow;
+const amos_bow_loader = new GLTFLoader();
+  amos_bow_loader.load('/assets/items/amos_bow_-_genshin_impact/scene.gltf',(glscene)=>{
+    amos_bow = glscene.scene;
+    
+    // amos_bow.position.set(35,1,10)
+    amos_bow.position.set(35,0,9)
+    amos_bow.rotation.set(Math.PI/4,Math.PI/4,0)
+    amos_bow.scale.set(0.5,0.5,0.5)
+    amos_bow.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(amos_bow);
+  })
+let hina_weapon;
+const hina_weapon_loader = new GLTFLoader();
+  hina_weapon_loader.load('/assets/items/blue_archive_weapon_-_sorasaki_hina/scene.gltf',(glscene)=>{
+    hina_weapon = glscene.scene;
+    
+    // hina_weapon.position.set(35,1,40)
+    hina_weapon.position.set(35,1,40)
+    hina_weapon.rotation.set(Math.PI/4,Math.PI/4,0)
+    hina_weapon.scale.set(2.5,2.5,2.5)
+    hina_weapon.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(hina_weapon);
+  })
+let bella;
+const bella_loader = new GLTFLoader();
+  bella_loader.load('/assets/items/honkai_star_rail_bella/scene.gltf',(glscene)=>{
+    bella = glscene.scene;
+    
+    // bella.position.set(35,1,40)
+    bella.position.set(35,0,-20)
+    bella.rotation.set(0,-Math.PI/2,0)
+    bella.scale.set(1.5,1.5,1.5)
+    bella.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(bella);
+  })
+
+
+
 //Plane Lantai 
 const lantaiGeo = new THREE.BoxGeometry(90,180,1, 5, 5); //w h d wS hS dS
 const lantaiMat = new THREE.MeshPhongMaterial();
@@ -71,6 +201,17 @@ loadTexture(lantaiImg ,8, 13, lantaiGeo, lantaiMat, lantai, lantaiPos, lantaiRot
   objectCollider.push(outerWall);
   loadTexture(outerWallImg ,10, 15, outerWallGeo, outerWallMat, outerWall, outerWallPos, outerWallRot, lantai);
   
+  //frontside
+  const outerWallFrontGeo = new THREE.BoxGeometry(90,55,1, 5,5);
+  const outerWallFrontMat = new THREE.MeshPhongMaterial();
+  outerWallFrontMat.color.set(0xfff7eb);
+  const outerWallFrontPos= {x:0, y:89.5, z:-27};
+  const outerWallFrontRot = {x:20.44, y:0, z:0};
+  // const outerWallFrontImg = 'assets/wall/canvas_wall.jpg'
+  const outerWallFront = new THREE.Mesh(outerWallGeo, outerWallMat);
+  objectCollider.push(outerWallFront);
+  loadTexture(outerWallImg ,10, 15, outerWallFrontGeo, outerWallFrontMat, outerWallFront, outerWallFrontPos, outerWallFrontRot, lantai);
+  
   //leftside
   const outerWallSideGeo = new THREE.BoxGeometry(180,55,1, 5,5);
   const outerWallSideMat = new THREE.MeshPhongMaterial();
@@ -90,7 +231,7 @@ loadTexture(lantaiImg ,8, 13, lantaiGeo, lantaiMat, lantai, lantaiPos, lantaiRot
 
 //Roof
 const roofGeo = new THREE.CylinderGeometry( 45, 45, 180, 39, 38, false, 0.628, 3.141); //rT rB h rad hSeg oE thetaS thetaL 
-const roofMat = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide, transparent:true, opacity: 0.3} ); 
+const roofMat = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide, transparent:true, opacity: 0.3} ); 
 const roof = new THREE.Mesh( roofGeo, roofMat ); 
 roof.rotation.set(0, 0.95 , 0);
 roof.position.set(0, 0.5, -53);
@@ -107,10 +248,10 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead2 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead2,-35 , 40, -20);
 
-// var geometry = new THREE.BoxGeometry(3,3,3);
-// var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-// var pedestalHead3 = new THREE.Mesh(geometry, material);
-// spawnPedestal(pedestalHead3,-35 , 70, -20);
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead3 = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead3,-35 , 70, -20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
@@ -132,10 +273,10 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead7 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead7,35 , 40, 20);
 
-// var geometry = new THREE.BoxGeometry(3,3,3);
-// var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-// var pedestalHead8 = new THREE.Mesh(geometry, material);
-// spawnPedestal(pedestalHead8,35 , 70, 20);
+var geometry = new THREE.BoxGeometry(3,3,3);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+var pedestalHead8 = new THREE.Mesh(geometry, material);
+spawnPedestal(pedestalHead8,35 , 70, 20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
@@ -151,7 +292,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   //pigura
     //box tangga
     const pigguraGeo = new THREE.BoxGeometry(12 ,14, 0.3); 
-    const piguraMat = new THREE.MeshPhongMaterial();//({color: 0x00ff00});
+    const piguraMat = new THREE.MeshPhongMaterial({side : THREE.FrontSide});//({color: 0x00ff00});
     const pigura = new THREE.Mesh(pigguraGeo, piguraMat);
     const piguraPos = {x: 0, y :25, z:-88};
     const piguraRot = {x: 0, y :0, z: 8};
@@ -185,10 +326,18 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   });
   //box tangga
   const bawahTanggaGeo = new THREE.BoxGeometry(90 ,10,24); 
-  const bawahTanggaMat = new THREE.MeshPhongMaterial({color: 0x00ff00});
+  const bawahTanggaMat = new THREE.MeshPhongMaterial({
+    color: 0x6D6D6D, 
+    specular: 0x808080, 
+    shininess: 225, 
+    side: THREE.DoubleSide
+  });
   const bawahTangga = new THREE.Mesh(bawahTanggaGeo, bawahTanggaMat);
   bawahTangga.position.set(0,0,-78);
   scene.add(bawahTangga);
+  bawahTangga.receiveShadow = true;
+  bawahTangga.castShadow = true;
+  objectCollider.push(bawahTangga);
   //tangga kanan
   new MTLLoader()
   .setPath('assets/stair/')
@@ -217,10 +366,18 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   });
   //box tangga kanan
   const kananTanggaGeo = new THREE.BoxGeometry(18,14,24); 
-  const kananTangaMat = new THREE.MeshPhongMaterial({color: 0xffff00});
+  const kananTangaMat = new THREE.MeshPhongMaterial({
+    color: 0x6D6D6D, 
+    specular: 0x808080, 
+    shininess: 225, 
+    side: THREE.DoubleSide
+  });
   const kananTangga = new THREE.Mesh(kananTanggaGeo, kananTangaMat);
   kananTangga.position.set(35,12,-78);
   scene.add(kananTangga);
+  bawahTangga.receiveShadow = true;
+  bawahTangga.castShadow = true;
+  objectCollider.push(bawahTangga);
   //tangga kiri
   new MTLLoader()
   .setPath('assets/stair/')
@@ -249,10 +406,18 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   });
   //box tangga kiri
   const kiriTanggaGeo = new THREE.BoxGeometry(18,14,24); 
-  const kiriTanggaMat = new THREE.MeshPhongMaterial({color: 0xffff00});
+  const kiriTanggaMat = new THREE.MeshPhongMaterial({
+    color: 0x6D6D6D, 
+    specular: 0x808080, 
+    shininess: 225, 
+    side: THREE.DoubleSide
+  });
   const kiriTangga = new THREE.Mesh(kiriTanggaGeo, kiriTanggaMat);
   kiriTangga.position.set(-35,12,-78);
   scene.add(kiriTangga);
+  bawahTangga.receiveShadow = true;
+  bawahTangga.castShadow = true;
+  objectCollider.push(bawahTangga);
 
   //2nd Floor
     const lantai2KiriGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
@@ -926,14 +1091,37 @@ let walkSpeed = 0.001;
 var temp = new THREE.Vector3();// Speed of rotation around the object
 let centerObject = artefact; // Replace 'table' with the object you want to orbit around
 
-character.position.set(0, 0, 100);
+character.position.set(0,0,80);
 character.castShadow = true;
 // ========== ANIMATE ==========
+
+function float(dummy, tooo, y){
+  dummy.rotation.y +=0.01;
+  dummy.position.y = y+0.25  * Math.sin(tooo * 2);
+}
 //loop Animate
 function animate(){
     // controls.update();
     requestAnimationFrame(animate);
-
+    const elapsedTime = clock.getElapsedTime();
+  if(dodoco_king){
+    float(dodoco_king, elapsedTime, 0.75);
+  }
+  if(sparkle_mask){
+    float(sparkle_mask, elapsedTime, 0.2);
+  }
+  if(shiro_weapon){
+    float(shiro_weapon, elapsedTime, 1);
+  }
+  if(amos_bow){
+    float(amos_bow, elapsedTime, -0.2);
+  }
+  if(hina_weapon){
+    float(hina_weapon, elapsedTime, 1);
+  }
+  if(bella){
+    float(bella, elapsedTime, 0);
+  }
     if(yaw && !roll && !rotate && !pitch){
       let time = performance.now() * 0.5;
       camera.rotation.y += THREE.MathUtils.degToRad(0.5);
@@ -1185,7 +1373,7 @@ new MTLLoader()
       case 'e':
           if(!pitch && !yaw && !roll && !rotate){
             roll = true;
-            character.position.set(0,0,100);
+            character.position.set(0,0,80);
             // camera.position.set(0,0,0);
             camera.lookAt(bawahTangga.position);
 

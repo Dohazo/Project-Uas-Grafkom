@@ -1,0 +1,11 @@
+Model Information:
+* title:	Genshin Impact Wolf's Gravestone
+* source:	https://sketchfab.com/3d-models/genshin-impact-wolfs-gravestone-e71a938e02904b14abace9ce10078711
+* author:	Le Ryan (https://sketchfab.com/Loligami)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Genshin Impact Wolf's Gravestone" (https://sketchfab.com/3d-models/genshin-impact-wolfs-gravestone-e71a938e02904b14abace9ce10078711) by Le Ryan (https://sketchfab.com/Loligami) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
