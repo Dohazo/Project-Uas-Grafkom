@@ -804,21 +804,21 @@ let centerObject = artefact; // Replace 'table' with the object you want to orbi
 // ========== ANIMATE ==========
 //loop Animate
 function animate(){
-  // controls.update();
-  requestAnimationFrame(animate);
-  if(rotate){
-// Update orbit angle
-let time = performance.now() * 0.5;
-let angle = orbitSpeed * time;
+    // controls.update();
+    requestAnimationFrame(animate);
+    if(rotate){
+    // Update orbit angle
+    let time = performance.now() * 0.5;
+    let angle = orbitSpeed * time;
 
-// Calculate new camera position based on orbit
-let camX = centerObject.position.x + orbitRadius * Math.sin(angle);
-let camZ = centerObject.position.z + orbitRadius * Math.cos(angle);
-camera.position.set(camX, camera.position.y , camZ);
+    // Calculate new camera position based on orbit
+    let camX = centerObject.position.x + orbitRadius * Math.sin(angle);
+    let camZ = centerObject.position.z + orbitRadius * Math.cos(angle);
+    camera.position.set(camX, camera.position.y, camZ);
 
 
-// Point the camera towards the center of the object
-camera.lookAt(centerObject.position);
+    // Point the camera towards the center of the object
+    camera.lookAt(centerObject.position);
   }
      // table2 floating animation
    if (table) {
@@ -1006,10 +1006,12 @@ new MTLLoader()
       case 'q':
           if(!rotate){
             rotate = true;
-            camera.position.y += 7;
-// Rotasi kamera ke atas (misalnya, rotasi sebesar 45 derajat ke atas)
-let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
-camera.rotation.x += rotationAmount;
+            // camera.position.y += 20;
+            character.position.set(30,0,30);
+            camera.position.set(0,20,0);
+            // Rotasi kamera ke atas (misalnya, rotasi sebesar 45 derajat ke atas)
+            let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
+            camera.rotation.x += rotationAmount;
            }
            else{
             rotate = false;
@@ -1017,6 +1019,19 @@ camera.rotation.x += rotationAmount;
            }
             break;
 
+      case 'e':
+          if(!roll){
+            roll = true;
+            camera.position.y += 20;
+            // Rotasi kamera ke atas (misalnya, rotasi sebesar 45 derajat ke atas)
+            let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
+            camera.rotation.x += rotationAmount;
+           }
+           else{
+            roll = false;
+            resetCamera()
+           }
+            break;
   }
 });
 
