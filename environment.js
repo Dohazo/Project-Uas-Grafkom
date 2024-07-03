@@ -40,7 +40,7 @@ const character = new THREE.Mesh(characterGeometry, characterMaterial);
 character.add(camera);
 
 camera.position.set(0, 1, 0); 
-character.position.set(30,0,20) // Position camera inside the character
+character.position.set(30,0,10) // Position camera inside the character
 character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
@@ -216,89 +216,77 @@ spawnPedestal(pedestalHead5, -60);
   scene.add(kiriTangga);
 
   //2nd Floor
-    // const lantai2KiriGeo = new THREE.BoxGeometry(160,19,2, 5, 5); //w h d wS hS dS
-    // const lantai2KiriMat = new THREE.MeshPhongMaterial();
-    // lantai2KiriMat.color.set(0xfff7eb);
-    // const lantai2KiriPos = {x:-35, y:17.6, z:10};
-    // const lantai2KiriRot = {x:1.575, y:0, z:4.7};
-    // const lantai2KiriImg = 'assets/floor/ceiling_texture.jpg'
-    // const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
-    // loadTexture(lantai2KiriImg ,1, 1, lantai2KiriGeo, lantai2KiriMat, lantai2Kiri, lantai2KiriPos, lantai2KiriRot, scene);
-    const lantai2KiriGeo = new THREE.BoxGeometry(160,19,2, 5, 5); //w h d wS hS dS
-    const lantai2KiriMat = new THREE.MeshPhongMaterial({color: 0xff00ff});
+    const lantai2KiriGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
+    const lantai2KiriMat = new THREE.MeshPhongMaterial();
+    lantai2KiriMat.color.set(0xfff7eb);
+    const lantai2KiriPos = {x:-33, y:17.6, z:10};
+    const lantai2KiriRot = {x:1.575, y:0, z:4.7};
+    const lantai2KiriImg = 'assets/floor/ceiling_texture.jpg'
     const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
-    lantai2Kiri.position.set(-35, 17.6, 10);
-    lantai2Kiri.rotation.set(1.575, 0, 4.7);
-    lantai2Kiri.receiveShadow = true;
-    lantai2Kiri.castShadow= true;
-    scene.add(lantai2Kiri);
+    loadTexture(lantai2KiriImg ,8, 2, lantai2KiriGeo, lantai2KiriMat, lantai2Kiri, lantai2KiriPos, lantai2KiriRot, scene);
+    // const lantai2KiriGeo = new THREE.BoxGeometry(160,19,2, 5, 5); //w h d wS hS dS
+    // const lantai2KiriMat = new THREE.MeshPhongMaterial({color: 0xff00ff});
+    // const lantai2Kiri = new THREE.Mesh(lantai2KiriGeo, lantai2KiriMat);
+    // lantai2Kiri.position.set(-35, 17.6, 10);
+    // lantai2Kiri.rotation.set(1.575, 0, 4.7);
+    // lantai2Kiri.receiveShadow = true;
+    // lantai2Kiri.castShadow= true;
+    // scene.add(lantai2Kiri);
 
-    let table;
-    let table2;
-  //Center Object
-    new MTLLoader()
-  .setPath('assets/center/')
-  .load('table_cloth.mtl', function (materials) {
-    materials.preload();
-    new OBJLoader()
-      .setMaterials(materials)
-      .setPath('assets/center/')
-      .load('table_cloth.obj', function (object) {
-        table = object;
-        table.scale.set(20,7,35);
-        table.position.set(0,5,0);
-        
-        table.rotation.y += Math.PI/6;
-        table.rotation.x += Math.PI/10;
-        table.rotation.z += -Math.PI/9;
-        
-        // table.rotation.x += 0.2;
-        table.receiveShadow = true;
-        table.castShadow = true;
-        table.traverse( function ( child ) {
-          if ( child.isMesh ) {
-            child.material.side = THREE.DoubleSide;
-            child.castShadow = true;
-            child.receiveShadow = true;
-            child.material.wireframe = false;
-          }
-        })
-        scene.add(table);
-        objectCollider.push(table);
-      });
-  });
-  //Center Object
-    new MTLLoader()
-  .setPath('assets/center/')
-  .load('table_cloth.mtl', function (materials) {
-    materials.preload();
-    new OBJLoader()
-      .setMaterials(materials)
-      .setPath('assets/center/')
-      .load('table_cloth.obj', function (object) {
-        table2 = object;
-        table2.scale.set(20,15,35);
-        table2.position.set(15,10,-15);
-        
-        table2.rotation.y += Math.PI/9;
-        table2.rotation.x += Math.PI/12;
-        table2.rotation.z += Math.PI/9;
-        
-        // table2.rotation.x += 0.2;
-        table2.receiveShadow = true;
-        table2.castShadow = true;
-        table2.traverse( function ( child ) {
-          if ( child.isMesh ) {
-            child.material.side = THREE.DoubleSide;
-            child.castShadow = true;
-            child.receiveShadow = true;
-            child.material.wireframe = false;
-          }
-        })
-        scene.add(table2);
-        objectCollider.push(table2);
-      });
-  });
+  //Display wall
+   //kiri
+   new MTLLoader()
+   .setPath('assets/wall/')
+   .load('display_wall.mtl', function (materials) {
+     materials.preload();
+     new OBJLoader()
+       .setMaterials(materials)
+       .setPath('assets/wall/')
+       .load('display_wall.obj', function (object) {
+         object.scale.set(12,7,8);
+         object.position.set(-44,10,0);
+         object.rotation.y += 1.58;
+         // object.rotation.x += 0.2;
+         object.receiveShadow = true;
+         object.castShadow = true;
+         object.traverse( function ( child ) {
+           if ( child.isMesh ) {
+             child.castShadow = true;
+             child.receiveShadow = true;
+             child.material.wireframe = false;
+           }
+         })
+         scene.add(object);
+         objectCollider.push(object);
+       });
+   });
+   //kanan
+   new MTLLoader()
+   .setPath('assets/wall/')
+   .load('display_wall.mtl', function (materials) {
+     materials.preload();
+     new OBJLoader()
+       .setMaterials(materials)
+       .setPath('assets/wall/')
+       .load('display_wall.obj', function (object) {
+         object.scale.set(12,7,8);
+         object.position.set(-20,10,0);
+         object.rotation.y += 1.58;
+        //  object.rotation.x += 0.2;
+         object.receiveShadow = true;
+         object.castShadow = true;
+         object.traverse( function ( child ) {
+           if ( child.isMesh ) {
+             child.castShadow = true;
+             child.receiveShadow = true;
+             child.material.wireframe = false;
+           }
+         })
+         scene.add(object);
+         objectCollider.push(object);
+       });
+   });
+
 
 // ========== LIGHT ==========
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
@@ -308,8 +296,8 @@ scene.add(pointLight);
 // scene.add(hemisphereLight);
 
 // ========== LIGHT HELPER ==========
-// var shadowDir = new THREE.SpotLightHelper(spotLight);
 // var shadowDir = new THREE.PointLightHelper(pointLight);
+// var shadowDir = new THREE.SpotLightHelper(spotLight);
 // scene.add(shadowDir)
 
 // ========== Movement ==========
@@ -438,9 +426,11 @@ function spawnPedestal(poi, pos){
     spotLight.position.set(-20,-4,pos);//posisi e dimana
     spotLight.target.position.set(glass.position.x+3, glass.position.y, glass.position.z);//arah e kemana
     spotLight.castShadow = true;
-    spotLight.angle = Math.PI / 10;
+    spotLight.angle = Math.PI / 9;
     scene.add(spotLight);
     scene.add(spotLight.target);
+    // var shadowDir = new THREE.SpotLightHelper(spotLight);
+    // scene.add(shadowDir)
 }
 
 //Texture Loader
