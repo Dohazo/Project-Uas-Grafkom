@@ -810,12 +810,31 @@ scene.add(pointLight);
 const light = new THREE.AmbientLight( 0xcfe2f3, 0.1 ); // soft white light
 scene.add( light );
 
+//upstair spotlight
+var redLight = new THREE.SpotLight(0xff5b5b, 90,50);
+// spotLight.position.set(-10,10,0);//posisi e dimana
+redLight.position.set(30, 55, -70);//posisi e dimana
+redLight.target.position.set(0, 25, -88);//arah e kemana
+redLight.castShadow = true;
+redLight.angle = Math.PI / 9;
+scene.add(redLight);
+scene.add(redLight.target);
+
+var blueLight = new THREE.SpotLight(0x58E6FF, 90,50);
+// spotLight.position.set(-10,10,0);//posisi e dimana
+blueLight.position.set(-30, 55, -70);//posisi e dimana
+blueLight.target.position.set(0, 25, -88);//arah e kemana
+blueLight.castShadow = true;
+blueLight.angle = Math.PI / 9;
+scene.add(blueLight);
+scene.add(blueLight.target);
+
 // var hemisphereLight = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.17); // color dari langit, color dari tanah, intensitas
 // scene.add(hemisphereLight);
 
 // ========== LIGHT HELPER ==========
-// var shadowDir = new THREE.PointLightHelper(pointLight);
-// scene.add(shadowDir);
+var shadowDir = new THREE.SpotLightHelper(redLight);
+scene.add(shadowDir);
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -865,7 +884,7 @@ let walkSpeed = 0.001;
 var temp = new THREE.Vector3();// Speed of rotation around the object
 let centerObject = artefact; // Replace 'table' with the object you want to orbit around
 
-character.position.set(0,0,100);
+character.position.set(0, 0, 0);
 character.castShadow = true;
 // ========== ANIMATE ==========
 //loop Animate
