@@ -782,11 +782,11 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
        
        // streetLight.rotation.x += 0.2;
        streetLight.receiveShadow = true;
-       streetLight.castShadow = true;
+       streetLight.castShadow = false;
        streetLight.traverse( function ( child ) {
          if ( child.isMesh ) {
            child.material.side = THREE.DoubleSide;
-           child.castShadow = true;
+           child.castShadow = false;
            child.receiveShadow = true;
            child.material.wireframe = false;
          }
@@ -799,9 +799,49 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
  artefact.position.set(-10,0,-10)
  scene.add(artefact);
 
+  new MTLLoader()
+ .setPath('assets/spotlight/')
+ .load('spotlight.mtl', function (materials) {
+   materials.preload();
+   new OBJLoader()
+     .setMaterials(materials)
+     .setPath('assets/spotlight/')
+     .load('spotlight.obj', function (object) {
+       object.scale.set(0.17,0.17,0.17);
+       // object.position.set(-35, -0.5, 0);
+       object.position.set(30, 53, -85); //x, y, z
+       object.rotation.x += -0.1;
+       object.rotation.y += 17.4;
+
+       scene.add(object);
+       objectCollider.push(object)
+
+     });
+ });
+
+  new MTLLoader()
+ .setPath('assets/spotlight/')
+ .load('spotlight.mtl', function (materials) {
+   materials.preload();
+   new OBJLoader()
+     .setMaterials(materials)
+     .setPath('assets/spotlight/')
+     .load('spotlight.obj', function (object) {
+       object.scale.set(0.17,0.17,0.17);
+       // object.position.set(-35, -0.5, 0);
+       object.position.set(-30, 53, -85); //x, y, z
+       object.rotation.x += -0.1;
+       object.rotation.y += -17.4;
+
+       scene.add(object);
+       objectCollider.push(object)
+
+     });
+ });
+
 
 // ========== LIGHT ==========
-// scene.fog = new THREE.FogExp2(0x000000, 0.02);
+scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
 pointLight.position.set(0,30,10);
 pointLight.castShadow = true;
@@ -811,18 +851,18 @@ const light = new THREE.AmbientLight( 0xcfe2f3, 0.1 ); // soft white light
 scene.add( light );
 
 //upstair spotlight
-var redLight = new THREE.SpotLight(0xff5b5b, 90,50);
+var redLight = new THREE.SpotLight(0xff5b5b, 100,50);
 // spotLight.position.set(-10,10,0);//posisi e dimana
-redLight.position.set(30, 55, -70);//posisi e dimana
+redLight.position.set(30, 55, -85);//posisi e dimana
 redLight.target.position.set(0, 25, -88);//arah e kemana
 redLight.castShadow = true;
 redLight.angle = Math.PI / 9;
 scene.add(redLight);
 scene.add(redLight.target);
 
-var blueLight = new THREE.SpotLight(0x58E6FF, 90,50);
+var blueLight = new THREE.SpotLight(0x58E6FF, 100,50);
 // spotLight.position.set(-10,10,0);//posisi e dimana
-blueLight.position.set(-30, 55, -70);//posisi e dimana
+blueLight.position.set(-30, 55, -85);//posisi e dimana
 blueLight.target.position.set(0, 25, -88);//arah e kemana
 blueLight.castShadow = true;
 blueLight.angle = Math.PI / 9;
@@ -833,8 +873,8 @@ scene.add(blueLight.target);
 // scene.add(hemisphereLight);
 
 // ========== LIGHT HELPER ==========
-var shadowDir = new THREE.SpotLightHelper(redLight);
-scene.add(shadowDir);
+// var shadowDir = new THREE.SpotLightHelper(blueLight);
+// scene.add(shadowDir);
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -884,7 +924,7 @@ let walkSpeed = 0.001;
 var temp = new THREE.Vector3();// Speed of rotation around the object
 let centerObject = artefact; // Replace 'table' with the object you want to orbit around
 
-character.position.set(0, 0, 0);
+character.position.set(0, 0, 100);
 character.castShadow = true;
 // ========== ANIMATE ==========
 //loop Animate
