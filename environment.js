@@ -10,7 +10,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-// renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 var creativeMode = false;
 var objectCollider = [];
@@ -260,14 +260,14 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
     const lantai2Kanan = new THREE.Mesh(lantai2KananGeo, lantai2KananMat);
     loadTexture(lantai2KananImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Kanan, lantai2KananPos, lantai2KananRot, scene);
     
-    // const lantai2KananGeo = new THREE.BoxGeometry(160,23,2, 5, 5); //w h d wS hS dS
-    // const lantai2KananMat = new THREE.MeshPhongMaterial();
-    // lantai2KananMat.color.set(0xfff7eb);
-    // const lantai2KananPos = {x:35, y:17.6, z:10};
-    // const lantai2KananRot = {x:1.575, y:0, z:4.7};
-    // const lantai2KananImg = 'assets/floor/ceiling_texture.jpg'
-    // const lantai2Kanan = new THREE.Mesh(lantai2KananGeo, lantai2KananMat);
-    // loadTexture(lantai2KananImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Kanan, lantai2KananPos, lantai2KananRot, scene);
+    const Lantai2BlkgGeo = new THREE.BoxGeometry(46,23,2, 5, 5); //w h d wS hS dS
+    const Lantai2BlkgMat = new THREE.MeshPhongMaterial();
+    Lantai2BlkgMat.color.set(0xfff7eb);
+    const lantai2BlkgPos = {x:2, y:17.6, z:80};
+    const lantai2BlkgRot = {x:1.575, y:0, z:0};
+    const lantai2BlkgImg = 'assets/floor/ceiling_texture.jpg'
+    const lantai2Blkg = new THREE.Mesh(Lantai2BlkgGeo, Lantai2BlkgMat);
+    loadTexture(lantai2BlkgImg ,8, 2, lantai2KiriGeo, lantai2KananMat, lantai2Blkg, lantai2BlkgPos, lantai2BlkgRot, scene);
 
     //Railing
     //kanan dari z -55 dst
