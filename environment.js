@@ -328,7 +328,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
      .load('table_cloth.obj', function (object) {
        table = object;
        table.scale.set(20,7,35);
-       table.position.set(0,5,0);
+       table.position.set(0,10,8);
        
        table.rotation.y += Math.PI/6;
        table.rotation.x += Math.PI/10;
@@ -361,7 +361,8 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
      .load('table_cloth.obj', function (object) {
        table2 = object;
        table2.scale.set(20,15,35);
-       table2.position.set(10,10,-15);
+       table2.position.set(8,25,-15);
+       table2.position.y += 10;
        
        table2.rotation.y += Math.PI/9;
        table2.rotation.x += Math.PI/12;
@@ -394,12 +395,12 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
      .setPath('assets/center/')
      .load('streetLamp.obj', function (object) {
        streetLight = object;
-       streetLight.scale.set(20,15,35);
-       streetLight.position.set(20,10,-15);
+       streetLight.scale.set(20,20,20);
+       streetLight.position.set(20,10,-14);
        
-       streetLight.rotation.y += Math.PI/9;
-       streetLight.rotation.x += Math.PI/12;
-       streetLight.rotation.z += Math.PI/9;
+       streetLight.rotation.y += Math.PI/3.5;
+       streetLight.rotation.x += Math.PI/5.6;
+       streetLight.rotation.z += Math.PI/5.3;
        
        // streetLight.rotation.x += 0.2;
        streetLight.receiveShadow = true;
@@ -417,7 +418,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
        objectCollider.push(table2);
      });
  });
- artefact.position.set(-5,0,-10)
+ artefact.position.set(-10,0,-10)
  scene.add(artefact);
 
 
@@ -435,6 +436,7 @@ scene.add( light );
 
 // ========== LIGHT HELPER ==========
 // var shadowDir = new THREE.PointLightHelper(pointLight);
+// scene.add(shadowDir);
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -484,10 +486,10 @@ function animate(){
   requestAnimationFrame(animate);
      // table2 floating animation
    if (table) {
-    table.position.y = Math.sin(clock.getElapsedTime()) * 0.5 - 1.2;
+    table.position.y = Math.sin(clock.getElapsedTime()) * 0.5 + 10;
 }
    if (table2) {
-    table2.position.y = Math.sin(clock.getElapsedTime()) * 0.5 - 1;
+    table2.position.y = Math.sin(clock.getElapsedTime()) * 0.5 + 10;
 }
     if(!creativeMode){
       forwardVector = getForwardVector();
