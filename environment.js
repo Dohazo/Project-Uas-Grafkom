@@ -14,6 +14,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 var creativeMode = false;
 let rotate = false;
+let roll = false;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
@@ -798,6 +799,7 @@ var forwardVector;
     // Define variables for orbit animation
 let orbitRadius = 10; // Radius of orbit circle
 let orbitSpeed = 0.001; 
+let walkSpeed = 0.001; 
 var temp = new THREE.Vector3();// Speed of rotation around the object
 let centerObject = artefact; // Replace 'table' with the object you want to orbit around
 
@@ -806,6 +808,18 @@ let centerObject = artefact; // Replace 'table' with the object you want to orbi
 function animate(){
     // controls.update();
     requestAnimationFrame(animate);
+
+    if (roll) {
+      let time = performance.now() * 0.5;
+      let camX = centerObject.position.x;
+      let camZ = centerObject.position.z + walkSpeed * time;
+      camera.position.set(camX, camera.position.y, -camZ);
+      
+      // Roll the camera around the z-axis
+      // camera.rotation.z += 0.01; // Adjust the value as needed to control the roll speed
+      camera.rotation.z += THREE.MathUtils.degToRad(1); // Roll: 10 degrees
+      // camera.lookAt(bawahTangga.position);
+    }
     if(rotate){
     // Update orbit angle
     let time = performance.now() * 0.5;
@@ -1022,10 +1036,10 @@ new MTLLoader()
       case 'e':
           if(!roll){
             roll = true;
-            camera.position.y += 20;
-            // Rotasi kamera ke atas (misalnya, rotasi sebesar 45 derajat ke atas)
-            let rotationAmount = THREE.MathUtils.degToRad(45); // Ubah derajat ke radian
-            camera.rotation.x += rotationAmount;
+            character.position.set(30,0,0);
+            // camera.position.set(0,0,0);
+            camera.lookAt(bawahTangga.position);
+
            }
            else{
             roll = false;
