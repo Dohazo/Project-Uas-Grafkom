@@ -15,6 +15,8 @@ document.body.appendChild(renderer.domElement);
 var creativeMode = false;
 let rotate = false;
 let roll = false;
+let yaw = false;
+let pitch = false;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
@@ -932,7 +934,17 @@ function animate(){
     // controls.update();
     requestAnimationFrame(animate);
 
-    if (roll && !rotate) {
+    if(yaw && !roll && !rotate && !pitch){
+      let time = performance.now() * 0.5;
+      camera.rotation.y += THREE.MathUtils.degToRad(0.5);
+    }
+
+    if(pitch && !roll && !rotate && !yaw){
+      let time = performance.now() * 0.5;
+      camera.rotation.x += THREE.MathUtils.degToRad(0.5);
+    }
+
+    if (roll && !rotate && !pitch && !yaw) {
       let time = performance.now() * 0.5;
       let camX = centerObject.position.x;
       let camZ = centerObject.position.z + walkSpeed * time;
@@ -957,7 +969,7 @@ function animate(){
       camera.rotation.z += THREE.MathUtils.degToRad(1); // Roll: 10 degrees
       // camera.lookAt(bawahTangga.position);
     }
-    if(rotate && !roll){
+    if(rotate && !roll && !pitch && !yaw){
     // Update orbit angle
     let time = performance.now() * 0.5;
     let angle = orbitSpeed * time;
@@ -1155,7 +1167,7 @@ new MTLLoader()
            }
             break;
       case 'q':
-          if(!rotate && !roll){
+          if(!pitch && !yaw && !roll && !rotate){
             rotate = true;
             // camera.position.y += 20;
             character.position.set(30,0,30);
@@ -1171,7 +1183,7 @@ new MTLLoader()
             break;
 
       case 'e':
-          if(!roll && !rotate){
+          if(!pitch && !yaw && !roll && !rotate){
             roll = true;
             character.position.set(0,0,100);
             // camera.position.set(0,0,0);
@@ -1180,6 +1192,33 @@ new MTLLoader()
            }
            else if (roll){
             roll = false;
+            resetCamera()
+           }
+            break;
+
+      case 'y':
+          if(!pitch && !yaw && !roll && !rotate){
+            yaw = true;
+            character.position.set(0,0,0);
+            // camera.position.set(0,0,0);
+            camera.lookAt(bawahTangga.position);
+
+           }
+           else if (yaw){
+            yaw = false;
+            resetCamera()
+           }
+            break;
+      case 'p':
+          if(!pitch && !yaw && !roll && !rotate){
+            pitch = true;
+            character.position.set(0,0,0);
+            // camera.position.set(0,0,0);
+            camera.lookAt(bawahTangga.position);
+
+           }
+           else if (pitch){
+            pitch = false;
             resetCamera()
            }
             break;
