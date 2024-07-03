@@ -47,6 +47,121 @@ character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
 // ========== OBJECT ==========
+// dodoco
+
+let dodoco_king;
+const dodoco_king_loader = new GLTFLoader();
+  dodoco_king_loader.load('/assets/items/dodoco_king_-_genshin_impact/scene.gltf',(glscene)=>{
+
+    dodoco_king = glscene.scene;
+    dodoco_king.scale.set(0.25,0.25,0.25)
+    dodoco_king.receiveShadow = true;
+    dodoco_king.castShadow = true;
+    dodoco_king.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    dodoco_king.rotation.set(0,Math.PI/2,0)
+    dodoco_king.position.set(-35 , 1, -20)
+    scene.add(dodoco_king);
+
+  })
+let sparkle_mask;
+const sparkle_mask_loader = new GLTFLoader();
+  sparkle_mask_loader.load('/assets/items/sparkle_mask/scene.gltf',(glscene)=>{
+    sparkle_mask = glscene.scene;
+    
+    sparkle_mask.position.set(-35 , 1, 40)
+    sparkle_mask.rotation.set(0,Math.PI/2,0)
+    sparkle_mask.scale.set(0.2,0.2,0.2)
+    sparkle_mask.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(sparkle_mask);
+  })
+let shiro_weapon;
+const shiro_weapon_loader = new GLTFLoader();
+  shiro_weapon_loader.load('/assets/items/blue_archive_shirokos_rifle/scene.gltf',(glscene)=>{
+    shiro_weapon = glscene.scene;
+    
+    shiro_weapon.position.set(-35,1,10)
+    shiro_weapon.rotation.set(Math.PI/4,Math.PI/4,0)
+    shiro_weapon.scale.set(0.25,0.25,0.25)
+    shiro_weapon.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(shiro_weapon);
+  })
+
+
+let amos_bow;
+const amos_bow_loader = new GLTFLoader();
+  amos_bow_loader.load('/assets/items/amos_bow_-_genshin_impact/scene.gltf',(glscene)=>{
+    amos_bow = glscene.scene;
+    
+    // amos_bow.position.set(35,1,10)
+    amos_bow.position.set(35,0,9)
+    amos_bow.rotation.set(Math.PI/4,Math.PI/4,0)
+    amos_bow.scale.set(0.5,0.5,0.5)
+    amos_bow.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(amos_bow);
+  })
+let hina_weapon;
+const hina_weapon_loader = new GLTFLoader();
+  hina_weapon_loader.load('/assets/items/blue_archive_weapon_-_sorasaki_hina/scene.gltf',(glscene)=>{
+    hina_weapon = glscene.scene;
+    
+    // hina_weapon.position.set(35,1,40)
+    hina_weapon.position.set(35,1,40)
+    hina_weapon.rotation.set(Math.PI/4,Math.PI/4,0)
+    hina_weapon.scale.set(2.5,2.5,2.5)
+    hina_weapon.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(hina_weapon);
+  })
+let bella;
+const bella_loader = new GLTFLoader();
+  bella_loader.load('/assets/items/honkai_star_rail_bella/scene.gltf',(glscene)=>{
+    bella = glscene.scene;
+    
+    // bella.position.set(35,1,40)
+    bella.position.set(35,0,-20)
+    bella.rotation.set(0,-Math.PI/2,0)
+    bella.scale.set(1.5,1.5,1.5)
+    bella.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.wireframe = false;
+      }
+    })
+    scene.add(bella);
+  })
+
+
+
 //Plane Lantai 
 const lantaiGeo = new THREE.BoxGeometry(90,180,1, 5, 5); //w h d wS hS dS
 const lantaiMat = new THREE.MeshPhongMaterial();
@@ -887,11 +1002,34 @@ let centerObject = artefact; // Replace 'table' with the object you want to orbi
 character.position.set(0, 0, 0);
 character.castShadow = true;
 // ========== ANIMATE ==========
+
+function float(dummy, tooo, y){
+  dummy.rotation.y +=0.01;
+  dummy.position.y = y+0.25  * Math.sin(tooo * 2);
+}
 //loop Animate
 function animate(){
     // controls.update();
     requestAnimationFrame(animate);
-
+    const elapsedTime = clock.getElapsedTime();
+  if(dodoco_king){
+    float(dodoco_king, elapsedTime, 0.75);
+  }
+  if(sparkle_mask){
+    float(sparkle_mask, elapsedTime, 0.2);
+  }
+  if(shiro_weapon){
+    float(shiro_weapon, elapsedTime, 1);
+  }
+  if(amos_bow){
+    float(amos_bow, elapsedTime, -0.2);
+  }
+  if(hina_weapon){
+    float(hina_weapon, elapsedTime, 1);
+  }
+  if(bella){
+    float(bella, elapsedTime, 0);
+  }
     if (roll) {
       let time = performance.now() * 0.5;
       let camX = centerObject.position.x;
