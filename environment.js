@@ -70,7 +70,7 @@ loadTexture(lantaiImg ,8, 13, lantaiGeo, lantaiMat, lantai, lantaiPos, lantaiRot
   //leftside
   const outerWallSideGeo = new THREE.BoxGeometry(180,55,1, 5,5);
   const outerWallSideMat = new THREE.MeshPhongMaterial();
-  outerWallSideMat.color.set(0xfff7eb);
+  outerWallSideMat.color.set(0xece0c3);
   const outerWallLeftPos = {x:-44.5, y:0.4, z:-27};
   const outerWallLeftRot = {x:1.57, y:1.57, z:0};
   const outerWallLeft = new THREE.Mesh(outerWallSideGeo, outerWallSideMat);
