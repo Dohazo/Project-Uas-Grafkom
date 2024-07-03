@@ -148,11 +148,12 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
   //pigura
     //box tangga
     const pigguraGeo = new THREE.BoxGeometry(12 ,14, 0.3); 
-    const piguraMat = new THREE.MeshPhongMaterial({color: 0x00ff00});
+    const piguraMat = new THREE.MeshPhongMaterial();//({color: 0x00ff00});
     const pigura = new THREE.Mesh(pigguraGeo, piguraMat);
     const piguraPos = {x: 0, y :25, z:-88};
-    const piguraImg = 'assets/wall/kocheng.jpg'
-    loadTexture(piguraImg, 1, 1, pigguraGeo, piguraMat, pigura, piguraPos, null, scene);
+    const piguraRot = {x: 0, y :0, z: 8};
+    const piguraImg = 'assets/wall/fucuan1.jpg'
+    loadTexture(piguraImg, 1, 1, pigguraGeo, piguraMat, pigura, piguraPos, piguraPos, scene);
   //tangga utama
   new MTLLoader()
   .setPath('assets/stair/')
