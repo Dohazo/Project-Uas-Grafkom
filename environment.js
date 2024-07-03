@@ -95,27 +95,27 @@ lantai.add( roof );
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
 var pedestalHead = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead, 0);
+spawnPedestal(pedestalHead, 10);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
 var pedestalHead2 = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead2, 30);
+spawnPedestal(pedestalHead2, 40);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
 var pedestalHead3 = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead3, 60);
+spawnPedestal(pedestalHead3, 70);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
 var pedestalHead4 = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead4, -30);
+spawnPedestal(pedestalHead4, -20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
 var pedestalHead5 = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead5, -60);
+spawnPedestal(pedestalHead5, -50);
 
 //Stairs 
   //tangga utama
@@ -233,16 +233,19 @@ spawnPedestal(pedestalHead5, -60);
     lantai2Kiri.castShadow= true;
     scene.add(lantai2Kiri);
 // ========== LIGHT ==========
+scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
 pointLight.position.set(0,30,10);
 scene.add(pointLight);
+
+// const light = new THREE.AmbientLight( 0x404040, 10 ); // soft white light
+// scene.add( light );
+
 // var hemisphereLight = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.3); // color dari langit, color dari tanah, intensitas
 // scene.add(hemisphereLight);
 
 // ========== LIGHT HELPER ==========
-// var shadowDir = new THREE.SpotLightHelper(spotLight);
 // var shadowDir = new THREE.PointLightHelper(pointLight);
-// scene.add(shadowDir)
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -317,6 +320,7 @@ requestAnimationFrame(animate);
 
 
 // ========== METHODS ==========
+
 //Spawn pedestal
 function spawnPedestal(poi, pos){
   //GLASS
@@ -366,6 +370,8 @@ function spawnPedestal(poi, pos){
     spotLight.angle = Math.PI / 10;
     scene.add(spotLight);
     scene.add(spotLight.target);
+    // var shadowDir = new THREE.SpotLightHelper(spotLight);
+    // scene.add(shadowDir)
 }
 
 //Texture Loader
