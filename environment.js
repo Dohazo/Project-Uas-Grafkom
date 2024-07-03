@@ -815,7 +815,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
        .setPath('assets/wall/')
        .load('display_wall.obj', function (object) {
          object.scale.set(12,7,8);
-         object.position.set(-44,10,0);
+         object.position.set(-44,9.5,0);
          object.rotation.y += 1.58;
          // object.rotation.x += 0.2;
          object.receiveShadow = true;
@@ -831,6 +831,34 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
         //  objectCollider.push(object);
        });
    });
+    //collider kiri
+    const invisibleBoxGeo = new THREE.BoxGeometry(24, 18, 1);
+    const invisibleBoxMat = new THREE.MeshBasicMaterial({ 
+      color: 0x000000, 
+      transparent: true, 
+      opacity: 0 
+    });
+    const invisibleBox = new THREE.Mesh(invisibleBoxGeo, invisibleBoxMat);
+    invisibleBox.position.set(-10, 5, 27.5);
+    invisibleBox.rotation.y = -1.5;
+    scene.add(invisibleBox);
+    // const boxHelper = new THREE.BoxHelper(invisibleBox, 0xff0000);
+    // scene.add(boxHelper);
+    objectCollider.push(invisibleBox);
+
+    const invisibleBoxGeo1 = new THREE.BoxGeometry(13, 18, 1);
+    const invisibleBoxMat1 = new THREE.MeshBasicMaterial({ 
+      color: 0x000000, 
+      transparent: true, 
+      opacity: 0 
+    });
+    const invisibleBox1 = new THREE.Mesh(invisibleBoxGeo1, invisibleBoxMat1);
+    invisibleBox1.position.set(-10, 5, 58);
+    invisibleBox1.rotation.y = -1.5;
+    scene.add(invisibleBox1);
+    // const boxHelper1 = new THREE.BoxHelper(invisibleBox1, 0xff0000);
+    // scene.add(boxHelper1);
+    objectCollider.push(invisibleBox1);
    //kanan
    new MTLLoader()
    .setPath('assets/wall/')
@@ -841,7 +869,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
        .setPath('assets/wall/')
        .load('display_wall.obj', function (object) {
          object.scale.set(12,7,8);
-         object.position.set(-20,10,0);
+         object.position.set(-20,9.5,0);
          object.rotation.y += 1.58;
         //  object.rotation.x += 0.2;
          object.receiveShadow = true;
@@ -857,6 +885,34 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
         //  objectCollider.push(object);
        });
    });
+   const invisibleBoxGeo2 = new THREE.BoxGeometry(24, 18, 1);
+   const invisibleBoxMat2 = new THREE.MeshBasicMaterial({ 
+     color: 0x000000, 
+     transparent: true, 
+     opacity: 0 
+   });
+   const invisibleBox2 = new THREE.Mesh(invisibleBoxGeo2, invisibleBoxMat2);
+   invisibleBox2.position.set(13, 5, 27.5);
+   invisibleBox2.rotation.y = -1.5;
+   scene.add(invisibleBox2);
+  //  const boxHelper2 = new THREE.BoxHelper(invisibleBox2, 0xff0000);
+  //  scene.add(boxHelper2);
+   objectCollider.push(invisibleBox2);
+
+
+   const invisibleBoxGeo3 = new THREE.BoxGeometry( 13, 18, 1);
+   const invisibleBoxMat3 = new THREE.MeshBasicMaterial({ 
+     color: 0x000000, 
+     transparent: true, 
+     opacity: 0 
+   });
+   const invisibleBox3 = new THREE.Mesh(invisibleBoxGeo1, invisibleBoxMat1);
+   invisibleBox3.position.set(13, 5, 58);
+   invisibleBox3.rotation.y = -1.5;
+   scene.add(invisibleBox3);
+  //  const boxHelper3 = new THREE.BoxHelper(invisibleBox3, 0xff0000);
+  //  scene.add(boxHelper3);
+   objectCollider.push(invisibleBox3);
 
    let table;
    let table2;
@@ -1351,7 +1407,7 @@ new MTLLoader()
            }
            else{
             creativeMode = false;
-            character.position.set(30,0,30);
+            character.position.set(0,0,80);
            }
             break;
       case 'q':
