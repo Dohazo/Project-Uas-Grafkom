@@ -31,6 +31,7 @@ let rotate = false;
 let roll = false;
 let yaw = false;
 let pitch = false;
+let reverse = 1;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
@@ -1062,11 +1063,50 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
      });
  });
 
+  new MTLLoader()
+  .setPath('assets/ufo/')
+  .load('UFO.mtl', function (materials) {
+    materials.preload();
+    // Set color for each material
+    for (let materialName in materials.materials) {
+      if (materials.materials.hasOwnProperty(materialName)) {
+        let material = materials.materials[materialName];
+        material.color.set(0xC0C0C0); // Silver color
+        material.metalness = 1.0; // Make it fully metallic
+        material.roughness = 0.4; // Adjust roughness to give it a shiny appearance
+      }
+    }
+    new OBJLoader()
+      .setMaterials(materials)
+      .setPath('assets/ufo/')
+      .load('UFO.obj', function (object) {
+        object.scale.set(2.3,2.3,2.3);
+        object.position.set(0, 100, -5); // x, y, z
+        // object.rotation.x += -0.1;
+        object.rotation.y += -17.4;
+
+        scene.add(object);
+        objectCollider.push(object);
+      });
+  });
+//cone light
+const coneGeo = new THREE.ConeGeometry( 30, 140, 32 ); 
+const coneMat = new THREE.MeshBasicMaterial( {
+  color: 0xAAFF00,
+  transparent : true,
+  opacity : 0.01,
+  side : THREE.DoubleSide
+} );
+const coneLight = new THREE.Mesh(coneGeo, coneMat ); 
+coneLight.position.set(2,50,-15);
+scene.add( coneLight );
+
+
 
 // ========== LIGHT ==========
 scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
-pointLight.position.set(0,30,10);
+pointLight.position.set(-5,30,10);
 pointLight.castShadow = true;
 scene.add(pointLight);
 
@@ -1092,12 +1132,22 @@ blueLight.angle = Math.PI / 9;
 scene.add(blueLight);
 scene.add(blueLight.target);
 
+var greenLight = new THREE.SpotLight(0xAAFF00, 500,50);
+// spotLight.position.set(-10,10,0);//posisi e dimana
+greenLight.position.set(0, 100, -5);//posisi e dimana
+greenLight.target.position.set(0,0,0);//arah e kemana
+greenLight.castShadow = true;
+greenLight.angle = Math.PI / 15;
+scene.add(greenLight);
+scene.add(greenLight.target);
+
+
 // var hemisphereLight = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.17); // color dari langit, color dari tanah, intensitas
 // scene.add(hemisphereLight);
 
 // ========== LIGHT HELPER ==========
-// var shadowDir = new THREE.SpotLightHelper(blueLight);
-// scene.add(shadowDir);
+var shadowDir = new THREE.PointLightHelper(pointLight);
+scene.add(shadowDir);
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -1180,12 +1230,12 @@ function animate(){
   }
     if(yaw && !roll && !rotate && !pitch){
       let time = performance.now() * 0.5;
-      camera.rotation.y += THREE.MathUtils.degToRad(0.5);
+      camera.rotation.y += THREE.MathUtils.degToRad(0.5 * reverse);
     }
 
     if(pitch && !roll && !rotate && !yaw){
       let time = performance.now() * 0.5;
-      camera.rotation.x += THREE.MathUtils.degToRad(0.5);
+      camera.rotation.x += THREE.MathUtils.degToRad(0.5 * reverse);
     }
 
     if (roll && !rotate && !pitch && !yaw) {
@@ -1465,6 +1515,9 @@ new MTLLoader()
             pitch = false;
             resetCamera()
            }
+            break;
+      case 'r':
+          reverse *= -1
             break;
   }
 });
