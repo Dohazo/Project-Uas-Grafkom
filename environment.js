@@ -287,6 +287,113 @@ spawnPedestal(pedestalHead5, -60);
        });
    });
 
+   let table;
+   let table2;
+   let streetLight;
+   let artefact = new THREE.Group()
+ //Center Object
+   new MTLLoader()
+ .setPath('assets/center/')
+ .load('table_cloth.mtl', function (materials) {
+   materials.preload();
+   new OBJLoader()
+     .setMaterials(materials)
+     .setPath('assets/center/')
+     .load('table_cloth.obj', function (object) {
+       table = object;
+       table.scale.set(20,7,35);
+       table.position.set(0,5,0);
+       
+       table.rotation.y += Math.PI/6;
+       table.rotation.x += Math.PI/10;
+       table.rotation.z += -Math.PI/9;
+       
+       // table.rotation.x += 0.2;
+       table.receiveShadow = true;
+       table.castShadow = true;
+       table.traverse( function ( child ) {
+         if ( child.isMesh ) {
+           child.material.side = THREE.DoubleSide;
+           child.castShadow = true;
+           child.receiveShadow = true;
+           child.material.wireframe = false;
+         }
+       })
+      //  scene.add(table);
+       artefact.add(table);
+       objectCollider.push(table);
+     });
+ });
+ //Center Object
+   new MTLLoader()
+ .setPath('assets/center/')
+ .load('table_cloth.mtl', function (materials) {
+   materials.preload();
+   new OBJLoader()
+     .setMaterials(materials)
+     .setPath('assets/center/')
+     .load('table_cloth.obj', function (object) {
+       table2 = object;
+       table2.scale.set(20,15,35);
+       table2.position.set(10,10,-15);
+       
+       table2.rotation.y += Math.PI/9;
+       table2.rotation.x += Math.PI/12;
+       table2.rotation.z += Math.PI/9;
+       
+       // table2.rotation.x += 0.2;
+       table2.receiveShadow = true;
+       table2.castShadow = true;
+       table2.traverse( function ( child ) {
+         if ( child.isMesh ) {
+           child.material.side = THREE.DoubleSide;
+           child.castShadow = true;
+           child.receiveShadow = true;
+           child.material.wireframe = false;
+         }
+       })
+      //  scene.add(table2);
+      artefact.position.y += 2
+       artefact.add(table2);
+       objectCollider.push(table2);
+     });
+ });
+ //Center Object
+   new MTLLoader()
+ .setPath('assets/center/')
+ .load('streelLamp.mtl', function (materials) {
+   materials.preload();
+   new OBJLoader()
+     .setMaterials(materials)
+     .setPath('assets/center/')
+     .load('streetLamp.obj', function (object) {
+       streetLight = object;
+       streetLight.scale.set(20,15,35);
+       streetLight.position.set(20,10,-15);
+       
+       streetLight.rotation.y += Math.PI/9;
+       streetLight.rotation.x += Math.PI/12;
+       streetLight.rotation.z += Math.PI/9;
+       
+       // streetLight.rotation.x += 0.2;
+       streetLight.receiveShadow = true;
+       streetLight.castShadow = true;
+       streetLight.traverse( function ( child ) {
+         if ( child.isMesh ) {
+           child.material.side = THREE.DoubleSide;
+           child.castShadow = true;
+           child.receiveShadow = true;
+           child.material.wireframe = false;
+         }
+       })
+      //  scene.add(streetLight);
+       artefact.add(streetLight);
+       objectCollider.push(table2);
+     });
+ });
+ artefact.position.set(-5,0,-10)
+ scene.add(artefact);
+
 
 // ========== LIGHT ==========
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
@@ -337,20 +444,22 @@ function getRightVector() {
 
 var forwardVector; 
     var rightVector ;
+
     const clock = new THREE.Clock();
     const delta = clock.getDelta();
     const time = clock.getElapsedTime();
-    
 // ========== ANIMATE ==========
 //loop Animate
 function animate(){
   // controls.update();
   requestAnimationFrame(animate);
-    
-   // table2 floating animation
-//    if (table) {
-//     table.position.y = Math.sin(clock.getElapsedTime()) * 0.5 - 1.2;
-// }
+     // table2 floating animation
+   if (table) {
+    table.position.y = Math.sin(clock.getElapsedTime()) * 0.5 - 1.2;
+}
+   if (table2) {
+    table2.position.y = Math.sin(clock.getElapsedTime()) * 0.5 - 1;
+}
     if(!creativeMode){
       forwardVector = getForwardVector();
       rightVector = getRightVector();
