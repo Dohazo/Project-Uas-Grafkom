@@ -1012,6 +1012,7 @@ function animate(){
     // controls.update();
     requestAnimationFrame(animate);
     const elapsedTime = clock.getElapsedTime();
+    console.log(elapsedTime);
   if(dodoco_king){
     float(dodoco_king, elapsedTime, 0.75);
   }
@@ -1059,7 +1060,7 @@ function animate(){
     // Update orbit angle
     let time = performance.now() * 0.5;
     let angle = orbitSpeed * time;
-
+    console.log(time)
     // Calculate new camera position based on orbit
     let camX = centerObject.position.x + orbitRadius * Math.sin(angle);
     let camZ = centerObject.position.z + orbitRadius * Math.cos(angle);
