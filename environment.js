@@ -44,7 +44,7 @@ const character = new THREE.Mesh(characterGeometry, characterMaterial);
 character.add(camera);
 
 camera.position.set(0, 1, 0); 
-character.position.set(30,0,30) // Position camera inside the character
+character.position.set(30,0,-55) // Position camera inside the character
 character.scale.set(3,3,3) // Position camera inside the character
 scene.add(character);
 
@@ -133,10 +133,121 @@ lantai.add( roof );
           scene.add(object);
           objectCollider.push(object)
           // Add collision helper for the pedestal
-          var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
-          scene.add(pedestalHelper);
+          // var pedestalHelper = new THREE.BoxHelper(object, 0x00ff00);
+          // scene.add(pedestalHelper);
         });
     });
+  
+  //Stairs 
+  //tangga utama
+  new MTLLoader()
+  .setPath('assets/stair/')
+  .load('stairs.mtl', function (materials) {
+    materials.preload();
+    new OBJLoader()
+      .setMaterials(materials)
+      .setPath('assets/stair/')
+      .load('stairs.obj', function (object) {
+        object.scale.set(6,5,6);
+        object.position.set(0,-2.3,-55);
+        // object.rotation.x += 1.2;
+        object.rotation.y += 0.001;
+        object.receiveShadow = true;
+        object.castShadow = true;
+        object.traverse( function ( child ) {
+          if ( child.isMesh ) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.material.wireframe = false;
+          }
+        })
+        scene.add(object);
+        objectCollider.push(object);
+      });
+  });
+  //box tangga
+  const bawahTanggaGeo = new THREE.BoxGeometry(90 ,10,24); 
+  const bawahTanggaMat = new THREE.MeshPhongMaterial({color: 0x00ff00});
+  const bawahTangga = new THREE.Mesh(bawahTanggaGeo, bawahTanggaMat);
+  bawahTangga.position.set(0,0,-78);
+  scene.add(bawahTangga);
+  //tangga kanan
+  new MTLLoader()
+  .setPath('assets/stair/')
+  .load('stairs.mtl', function (materials) {
+    materials.preload();
+    new OBJLoader()
+      .setMaterials(materials)
+      .setPath('assets/stair/')
+      .load('stairs.obj', function (object) {
+        object.scale.set(7.6,7,5);
+        object.position.set(15,8,-78);
+        object.rotation.y -= 1.58;
+        // object.rotation.x += 0.2;
+        object.receiveShadow = true;
+        object.castShadow = true;
+        object.traverse( function ( child ) {
+          if ( child.isMesh ) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.material.wireframe = false;
+          }
+        })
+        scene.add(object);
+        objectCollider.push(object);
+      });
+  });
+  //box tangga kanan
+  const kananTanggaGeo = new THREE.BoxGeometry(18,14,24); 
+  const kananTangaMat = new THREE.MeshPhongMaterial({color: 0xffff00});
+  const kananTangga = new THREE.Mesh(kananTanggaGeo, kananTangaMat);
+  kananTangga.position.set(35,12,-78);
+  scene.add(kananTangga);
+  //tangga kiri
+  new MTLLoader()
+  .setPath('assets/stair/')
+  .load('stairs.mtl', function (materials) {
+    materials.preload();
+    new OBJLoader()
+      .setMaterials(materials)
+      .setPath('assets/stair/')
+      .load('stairs.obj', function (object) {
+        object.scale.set(7.6,7,5);
+        object.position.set(-15,8,-78);
+        object.rotation.y += 1.58;
+        // object.rotation.x += 0.2;
+        object.receiveShadow = true;
+        object.castShadow = true;
+        object.traverse( function ( child ) {
+          if ( child.isMesh ) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.material.wireframe = false;
+          }
+        })
+        scene.add(object);
+        objectCollider.push(object);
+      });
+  });
+  //box tangga kiri
+  const kiriTanggaGeo = new THREE.BoxGeometry(18,14,24); 
+  const kiriTanggaMat = new THREE.MeshPhongMaterial({color: 0xffff00});
+  const kiriTangga = new THREE.Mesh(kiriTanggaGeo, kananTangaMat);
+  kiriTangga.position.set(-35,12,-78);
+  scene.add(kiriTangga);
+
+
+
+  //2nd Floor
+    // const lantai2Geo = new THREE.BoxGeometry(90,180,1, 5, 5); //w h d wS hS dS
+    // const lantai2Mat = new THREE.MeshPhongMaterial();
+    // lantai2Mat.color.set(0xfff7eb);
+    // const lantai2Pos = {x:0, y:-5, z:0};
+    // const lantai2Rot = {x:1.575, y:0, z:0};
+    // const lantai2Img = 'assets/floor/floor_tiles.jpeg'
+    // const lantai2 = new THREE.Mesh(lantai2Geo, lantai2Mat);
+    // loadTexture(lantai2Img ,8, 13, lantai2Geo, lantai2Mat, lantai2, lantai2Pos, lantai2Rot, scene);
+
 
   //setup camera  
   // camera.lookAt(glass.position.x, glass.position.y, glass.position.z);
@@ -172,6 +283,7 @@ scene.add(hemisphereLight);
 var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
 scene.add(directionalLightHelper);
 
+//MOVEMENT
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
 const moveSpeed = 0.5;  
 //Function to get the forward direction
@@ -209,7 +321,6 @@ function getRightVector() {
 var forwardVector; 
     var rightVector ;
 
-// Adjust movement speed as needed
 // ========== ANIMATE ==========
 //loop Animate
 function animate(){
