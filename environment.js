@@ -31,6 +31,7 @@ let rotate = false;
 let roll = false;
 let yaw = false;
 let pitch = false;
+let reverse = 1;
 var objectCollider = [];
 //init Camera
 const scene = new THREE.Scene();
@@ -248,10 +249,10 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead2 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead2,-35 , 40, -20);
 
-var geometry = new THREE.BoxGeometry(3,3,3);
-var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-var pedestalHead3 = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead3,-35 , 70, -20);
+// var geometry = new THREE.BoxGeometry(3,3,3);
+// var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+// var pedestalHead3 = new THREE.Mesh(geometry, material);
+// spawnPedestal(pedestalHead3,-35 , 70, -20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
@@ -273,10 +274,10 @@ var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, 
 var pedestalHead7 = new THREE.Mesh(geometry, material);
 spawnPedestal(pedestalHead7,35 , 40, 20);
 
-var geometry = new THREE.BoxGeometry(3,3,3);
-var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
-var pedestalHead8 = new THREE.Mesh(geometry, material);
-spawnPedestal(pedestalHead8,35 , 70, 20);
+// var geometry = new THREE.BoxGeometry(3,3,3);
+// var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
+// var pedestalHead8 = new THREE.Mesh(geometry, material);
+// spawnPedestal(pedestalHead8,35 , 70, 20);
 
 var geometry = new THREE.BoxGeometry(3,3,3);
 var material = new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.2});
@@ -815,7 +816,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
        .setPath('assets/wall/')
        .load('display_wall.obj', function (object) {
          object.scale.set(12,7,8);
-         object.position.set(-44,10,0);
+         object.position.set(-44,9.5,0);
          object.rotation.y += 1.58;
          // object.rotation.x += 0.2;
          object.receiveShadow = true;
@@ -831,6 +832,34 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
         //  objectCollider.push(object);
        });
    });
+    //collider kiri
+    const invisibleBoxGeo = new THREE.BoxGeometry(24, 18, 1);
+    const invisibleBoxMat = new THREE.MeshBasicMaterial({ 
+      color: 0x000000, 
+      transparent: true, 
+      opacity: 0 
+    });
+    const invisibleBox = new THREE.Mesh(invisibleBoxGeo, invisibleBoxMat);
+    invisibleBox.position.set(-10, 5, 27.5);
+    invisibleBox.rotation.y = -1.5;
+    scene.add(invisibleBox);
+    // const boxHelper = new THREE.BoxHelper(invisibleBox, 0xff0000);
+    // scene.add(boxHelper);
+    objectCollider.push(invisibleBox);
+
+    const invisibleBoxGeo1 = new THREE.BoxGeometry(13, 18, 1);
+    const invisibleBoxMat1 = new THREE.MeshBasicMaterial({ 
+      color: 0x000000, 
+      transparent: true, 
+      opacity: 0 
+    });
+    const invisibleBox1 = new THREE.Mesh(invisibleBoxGeo1, invisibleBoxMat1);
+    invisibleBox1.position.set(-10, 5, 58);
+    invisibleBox1.rotation.y = -1.5;
+    scene.add(invisibleBox1);
+    // const boxHelper1 = new THREE.BoxHelper(invisibleBox1, 0xff0000);
+    // scene.add(boxHelper1);
+    objectCollider.push(invisibleBox1);
    //kanan
    new MTLLoader()
    .setPath('assets/wall/')
@@ -841,7 +870,7 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
        .setPath('assets/wall/')
        .load('display_wall.obj', function (object) {
          object.scale.set(12,7,8);
-         object.position.set(-20,10,0);
+         object.position.set(-20,9.5,0);
          object.rotation.y += 1.58;
         //  object.rotation.x += 0.2;
          object.receiveShadow = true;
@@ -857,6 +886,34 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
         //  objectCollider.push(object);
        });
    });
+   const invisibleBoxGeo2 = new THREE.BoxGeometry(24, 18, 1);
+   const invisibleBoxMat2 = new THREE.MeshBasicMaterial({ 
+     color: 0x000000, 
+     transparent: true, 
+     opacity: 0 
+   });
+   const invisibleBox2 = new THREE.Mesh(invisibleBoxGeo2, invisibleBoxMat2);
+   invisibleBox2.position.set(13, 5, 27.5);
+   invisibleBox2.rotation.y = -1.5;
+   scene.add(invisibleBox2);
+  //  const boxHelper2 = new THREE.BoxHelper(invisibleBox2, 0xff0000);
+  //  scene.add(boxHelper2);
+   objectCollider.push(invisibleBox2);
+
+
+   const invisibleBoxGeo3 = new THREE.BoxGeometry( 13, 18, 1);
+   const invisibleBoxMat3 = new THREE.MeshBasicMaterial({ 
+     color: 0x000000, 
+     transparent: true, 
+     opacity: 0 
+   });
+   const invisibleBox3 = new THREE.Mesh(invisibleBoxGeo1, invisibleBoxMat1);
+   invisibleBox3.position.set(13, 5, 58);
+   invisibleBox3.rotation.y = -1.5;
+   scene.add(invisibleBox3);
+  //  const boxHelper3 = new THREE.BoxHelper(invisibleBox3, 0xff0000);
+  //  scene.add(boxHelper3);
+   objectCollider.push(invisibleBox3);
 
    let table;
    let table2;
@@ -1006,11 +1063,50 @@ spawnPedestal(pedestalHead9,35 , -20, 20);
      });
  });
 
+  new MTLLoader()
+  .setPath('assets/ufo/')
+  .load('UFO.mtl', function (materials) {
+    materials.preload();
+    // Set color for each material
+    for (let materialName in materials.materials) {
+      if (materials.materials.hasOwnProperty(materialName)) {
+        let material = materials.materials[materialName];
+        material.color.set(0xC0C0C0); // Silver color
+        material.metalness = 1.0; // Make it fully metallic
+        material.roughness = 0.4; // Adjust roughness to give it a shiny appearance
+      }
+    }
+    new OBJLoader()
+      .setMaterials(materials)
+      .setPath('assets/ufo/')
+      .load('UFO.obj', function (object) {
+        object.scale.set(2.3,2.3,2.3);
+        object.position.set(0, 100, -5); // x, y, z
+        // object.rotation.x += -0.1;
+        object.rotation.y += -17.4;
+
+        scene.add(object);
+        objectCollider.push(object);
+      });
+  });
+//cone light
+const coneGeo = new THREE.ConeGeometry( 30, 70, 32 ); 
+const coneMat = new THREE.MeshBasicMaterial( {
+  color: 0xAAFF00,
+  transparent : true,
+  opacity : 0.01,
+  side : THREE.DoubleSide
+} );
+const coneLight = new THREE.Mesh(coneGeo, coneMat ); 
+coneLight.position.set(2,50,-15);
+scene.add( coneLight );
+
+
 
 // ========== LIGHT ==========
 scene.fog = new THREE.FogExp2(0x000000, 0.02);
 var pointLight = new THREE.PointLight(0xcfe2f3, 100, 1000); // color dari langit, color dari tanah, intensitas
-pointLight.position.set(0,30,10);
+pointLight.position.set(-5,30,10);
 pointLight.castShadow = true;
 scene.add(pointLight);
 
@@ -1036,12 +1132,22 @@ blueLight.angle = Math.PI / 9;
 scene.add(blueLight);
 scene.add(blueLight.target);
 
+var greenLight = new THREE.SpotLight(0xAAFF00, 100,50);
+// spotLight.position.set(-10,10,0);//posisi e dimana
+greenLight.position.set(0, 100, -5);//posisi e dimana
+greenLight.target.position.set(0,0,0);//arah e kemana
+greenLight.castShadow = true;
+greenLight.angle = Math.PI / 10;
+scene.add(greenLight);
+scene.add(greenLight.target);
+
+
 // var hemisphereLight = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.17); // color dari langit, color dari tanah, intensitas
 // scene.add(hemisphereLight);
 
 // ========== LIGHT HELPER ==========
-// var shadowDir = new THREE.SpotLightHelper(blueLight);
-// scene.add(shadowDir);
+var shadowDir = new THREE.PointLightHelper(pointLight);
+scene.add(shadowDir);
 
 // ========== Movement ==========
 const moveDirection = new THREE.Vector3();  // Vector to store movement direction
@@ -1125,12 +1231,12 @@ function animate(){
   }
     if(yaw && !roll && !rotate && !pitch){
       let time = performance.now() * 0.5;
-      camera.rotation.y += THREE.MathUtils.degToRad(0.5);
+      camera.rotation.y += THREE.MathUtils.degToRad(0.5 * reverse);
     }
 
     if(pitch && !roll && !rotate && !yaw){
       let time = performance.now() * 0.5;
-      camera.rotation.x += THREE.MathUtils.degToRad(0.5);
+      camera.rotation.x += THREE.MathUtils.degToRad(0.5 * reverse);
     }
 
     if (roll && !rotate && !pitch && !yaw) {
@@ -1352,7 +1458,7 @@ new MTLLoader()
            }
            else{
             creativeMode = false;
-            character.position.set(30,0,30);
+            character.position.set(0,0,80);
            }
             break;
       case 'q':
@@ -1410,6 +1516,9 @@ new MTLLoader()
             pitch = false;
             resetCamera()
            }
+            break;
+      case 'r':
+          reverse *= -1
             break;
   }
 });
